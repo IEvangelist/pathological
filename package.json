@@ -1,38 +1,46 @@
 {
-	"name": "pathological",
-	"displayName": "Pathological",
-	"description": "A path manipulation extension for Visual Studio Code.",
-	"version": "0.0.1",
-	"publisher": "IEvangelist",
-	"repository": "https://github.com/IEvangelist/pathological",
-	"engines": {
-		"vscode": "^1.74.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [],
-	"main": "./out/extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "extension.pathological",
-				"title": "Pathological"
-			}
-		]
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"lint": "eslint \"src/**/*.ts\"",
-		"watch": "tsc -watch -p ./"
-	},
-	"devDependencies": {
-		"@types/node": "^16.18.34",
-		"@types/vscode": "^1.73.0",
-		"@typescript-eslint/eslint-plugin": "^6.7.0",
-		"@typescript-eslint/parser": "^6.7.0",
-		"eslint": "^8.26.0",
-		"typescript": "^5.2.2"
-	}
+    "name": "pathological",
+    "displayName": "Pathological",
+    "description": "A path manipulation extension for Visual Studio Code.",
+    "version": "0.0.1",
+    "publisher": "IEvangelist",
+    "repository": "https://github.com/IEvangelist/pathological",
+    "engines": {
+        "vscode": "^1.82.2"
+    },
+    "categories": [
+        "Other"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "pathological.getRelativePath",
+                "title": "Copy Relative Path (Pathological)"
+            }
+        ],
+        "menus": {
+            "explorer/context": [
+                {
+                    "when": "isFileSystemResource",
+                    "command": "pathological.getRelativePath",
+                    "group": "6_copypath"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "lint": "eslint src/**/*.ts --fix",
+        "watch": "tsc -watch -p ./"
+    },
+    "devDependencies": {
+        "@types/node": "^20.6.3",
+        "@types/vscode": "^1.82.0",
+        "@typescript-eslint/eslint-plugin": "^6.7.2",
+        "@typescript-eslint/parser": "^6.7.2",
+        "eslint": "^8.49.0",
+        "typescript": "^5.2.2"
+    }
 }
