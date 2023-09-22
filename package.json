@@ -16,11 +16,18 @@
         "commands": [
             {
                 "command": "pathological.selectUriForRelative",
-                "title": "Select for Relative Path"
+                "title": "Select for Relative Path",
+                "shortTitle": "Select Relative"
             },
             {
                 "command": "pathological.getRelativePath",
-                "title": "Copy Relative Path for Selected"
+                "title": "Copy Relative Path for Selected",
+                "shortTitle": "Relative Path for Selected"
+            },
+            {
+                "command": "pathological.getAsFileSystemTree",
+                "title": "Copy as File System Tree",
+                "shortTitle": "As Tree"
             }
         ],
         "menus": {
@@ -33,8 +40,26 @@
                     "when": "pathological.hasSelectedUri",
                     "command": "pathological.getRelativePath",
                     "group": "6_copypath"
+                },
+                {
+                    "when": "explorerResourceIsFolder",
+                    "command": "pathological.getAsFileSystemTree",
+                    "group": "6_copypath"
                 }
             ]
+        },
+        "configuration": {
+            "title": "Pathological",
+            "properties": {
+                "pathological.closedFolder": {
+                    "type": "string",
+                    "default": "📁"
+                },
+                "pathological.openFolder": {
+                    "type": "string",
+                    "default": "📂"
+                }
+            }
         }
     },
     "scripts": {

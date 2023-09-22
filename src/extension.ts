@@ -1,8 +1,12 @@
 import { ExtensionContext, commands, Uri, window, env } from "vscode";
-import { getRelativePath } from "./commands/pathological";
+import { getAsFileSystemTree, getRelativePath } from "./commands/pathological";
 
 let selectedUri: Uri | undefined;
 
+/**
+ * Sets the selected URI and updates the context accordingly.
+ * @param uri The URI to set as selected.
+ */
 const setSelectedUri = (uri: Uri | undefined) => {
     selectedUri = uri;
 
@@ -12,7 +16,10 @@ const setSelectedUri = (uri: Uri | undefined) => {
         !!selectedUri);
 }
 
-
+/**
+ * Activates the Pathological extension.
+ * @param context The extension context.
+ */
 export function activate(context: ExtensionContext) {
     const selectUriForRelativeDisposable = commands.registerCommand(
         "pathological.selectUriForRelative",
@@ -47,8 +54,23 @@ export function activate(context: ExtensionContext) {
             }
         });
 
+    const getFileSystemTreeDisposable = commands.registerCommand(
+        "pathological.getAsFileSystemTree",
+        (uri: Uri) => {
+            if (uri && uri.scheme === "file") {
+                const fileSystemTree = getAsFileSystemTree(uri);
+
+                env.clipboard.writeText(fileSystemTree);
+
+                window.showInformationMessage(
+                    fileSystemTree
+                );
+            }
+        });
+
     context.subscriptions.push(selectUriForRelativeDisposable);
     context.subscriptions.push(getRelativePathDisposable);
+    context.subscriptions.push(getFileSystemTreeDisposable);
 
     console.log("Pathological extension activated.");
 }
