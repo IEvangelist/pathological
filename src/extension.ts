@@ -1,19 +1,36 @@
 import { ExtensionContext, commands, Uri, window, env } from "vscode";
 import { getRelativePath } from "./commands/pathological";
 
-export function activate(context: ExtensionContext) {
-    const disposable = commands.registerCommand(
-        "pathological.getRelativePath",
-        (_: Uri, uris?: [Uri, Uri]) => {
-            if (uris?.length !== 2) {
-                window.showErrorMessage(
-                    "Please select two files to get the relative path between them."
-                );
+let selectedUri: Uri | undefined;
 
+const setSelectedUri = (uri: Uri | undefined) => {
+    selectedUri = uri;
+
+    commands.executeCommand(
+        "setContext",
+        "pathological.hasSelectedUri",
+        !!selectedUri);
+}
+
+
+export function activate(context: ExtensionContext) {
+    const selectUriForRelativeDisposable = commands.registerCommand(
+        "pathological.selectUriForRelative",
+        (uri: Uri) => {
+            if (uri && uri.scheme === "file") {
+                setSelectedUri(uri);
+            }
+        });
+
+    const getRelativePathDisposable = commands.registerCommand(
+        "pathological.getRelativePath",
+        (uri: Uri) => {
+            if (!selectedUri) {
+                // Shouldn't be possible...
                 return;
             }
 
-            const relativePath = getRelativePath(uris[0], uris[1]);
+            const relativePath = getRelativePath(selectedUri, uri);
 
             if (relativePath === null) {
                 window.showErrorMessage(
@@ -21,13 +38,17 @@ export function activate(context: ExtensionContext) {
                 );
             } else {
                 env.clipboard.writeText(relativePath);
+
                 window.showInformationMessage(
                     `The ${relativePath} path has been copied to clipboard.`
                 );
+
+                setSelectedUri(undefined);
             }
         });
 
-    context.subscriptions.push(disposable);
+    context.subscriptions.push(selectUriForRelativeDisposable);
+    context.subscriptions.push(getRelativePathDisposable);
 
     console.log("Pathological extension activated.");
 }

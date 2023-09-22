@@ -15,14 +15,22 @@
     "contributes": {
         "commands": [
             {
+                "command": "pathological.selectUriForRelative",
+                "title": "Select for Relative Path"
+            },
+            {
                 "command": "pathological.getRelativePath",
-                "title": "Copy Relative Path (Pathological)"
+                "title": "Copy Relative Path for Selected"
             }
         ],
         "menus": {
             "explorer/context": [
                 {
-                    "when": "isFileSystemResource",
+                    "command": "pathological.selectUriForRelative",
+                    "group": "6_copypath"
+                },
+                {
+                    "when": "pathological.hasSelectedUri",
                     "command": "pathological.getRelativePath",
                     "group": "6_copypath"
                 }
