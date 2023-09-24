@@ -119,7 +119,7 @@ function formatFileSystemTree(
         }
     } else {
         result += isLastChild ? '└───' : '├───';
-        result += `│    ${node.name}\n`;
+        result += ` ${node.name}\n`;
     }
 
     return result;
