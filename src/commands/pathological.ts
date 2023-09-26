@@ -84,6 +84,7 @@ function generateFileSystemTree(folderPath: string): FileTreeNode {
 
     if (node.isDirectory) {
         const files = readdirSync(folderPath);
+        
         node.children = files.map((file) => {
             const filePath = join(folderPath, file);
             return generateFileSystemTree(filePath);
@@ -106,14 +107,18 @@ function formatFileSystemTree(
     let result = indent;
 
     if (node.isDirectory) {
-        const folderEmoji = getFolderEmoji(node);
         result += isLastChild ? '└───' : '├───';
+
+        const folderEmoji = getFolderEmoji(node);
         result += `${folderEmoji} ${node.name}\n`;
+
         if (node.children) {
             const childCount = node.children.length;
+
             for (let i = 0; i < childCount; i++) {
                 const child = node.children[i];
                 const isLast = i === childCount - 1;
+
                 result += formatFileSystemTree(child, depth + 1, isLast);
             }
         }
