@@ -1,5 +1,5 @@
 import { workspace } from "vscode";
-import { PathologicalConfiguration } from "./models/pathological-configuration";
+import { PathologicalConfiguration } from "./types/pathological-configuration";
 
 let cachedConfig: PathologicalConfiguration | undefined;
 

@@ -1,7 +1,7 @@
 import { basename, dirname, join, normalize, relative } from "path";
 import { readdirSync, statSync } from "fs";
 import { Uri } from "vscode";
-import { FileTreeNode } from "../models/file-tree-node";
+import { FileTreeNode } from "../types/file-tree-node";
 import { getConfiguration } from "../config";
 
 /**

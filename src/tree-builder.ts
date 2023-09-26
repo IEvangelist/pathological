@@ -1,6 +1,6 @@
 import { getConfiguration } from "./config";
-import { FileTreeNode } from "./models/file-tree-node";
-import { PathologicalConfiguration } from "./models/pathological-configuration";
+import { FileTreeNode } from "./types/file-tree-node";
+import { PathologicalConfiguration } from "./types/pathological-configuration";
 
 export function buildTree(node: FileTreeNode): string {
     const config = getConfiguration();

@@ -1,79 +1,87 @@
 {
-    "name": "pathological",
-    "displayName": "Pathological",
-    "description": "A path manipulation extension for Visual Studio Code.",
-    "version": "0.0.1",
-    "publisher": "IEvangelist",
-    "repository": "https://github.com/IEvangelist/pathological",
-    "engines": {
-        "vscode": "^1.82.2"
-    },
-    "categories": [
-        "Other"
+  "name": "pathological",
+  "displayName": "Pathological",
+  "description": "A path manipulation extension for Visual Studio Code.",
+  "version": "0.0.1",
+  "publisher": "IEvangelist",
+  "repository": "https://github.com/IEvangelist/pathological",
+  "engines": {
+    "vscode": "^1.82.2"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "pathological.selectUriForRelative",
+        "title": "Select for Relative Path",
+        "shortTitle": "Select Relative"
+      },
+      {
+        "command": "pathological.getRelativePath",
+        "title": "Copy Relative Path for Selected",
+        "shortTitle": "Relative Path for Selected"
+      },
+      {
+        "command": "pathological.getAsFileSystemTree",
+        "title": "Copy as File System Tree",
+        "shortTitle": "As Tree"
+      }
     ],
-    "main": "./out/extension.js",
-    "contributes": {
-        "commands": [
-            {
-                "command": "pathological.selectUriForRelative",
-                "title": "Select for Relative Path",
-                "shortTitle": "Select Relative"
-            },
-            {
-                "command": "pathological.getRelativePath",
-                "title": "Copy Relative Path for Selected",
-                "shortTitle": "Relative Path for Selected"
-            },
-            {
-                "command": "pathological.getAsFileSystemTree",
-                "title": "Copy as File System Tree",
-                "shortTitle": "As Tree"
-            }
-        ],
-        "menus": {
-            "explorer/context": [
-                {
-                    "command": "pathological.selectUriForRelative",
-                    "group": "6_copypath"
-                },
-                {
-                    "when": "pathological.hasSelectedUri",
-                    "command": "pathological.getRelativePath",
-                    "group": "6_copypath"
-                },
-                {
-                    "when": "explorerResourceIsFolder",
-                    "command": "pathological.getAsFileSystemTree",
-                    "group": "6_copypath"
-                }
-            ]
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "pathological.selectUriForRelative",
+          "group": "6_copypath"
         },
-        "configuration": {
-            "title": "Pathological",
-            "properties": {
-                "pathological.closedFolder": {
-                    "type": "string",
-                    "default": "📁"
-                },
-                "pathological.openFolder": {
-                    "type": "string",
-                    "default": "📂"
-                }
-            }
+        {
+          "when": "pathological.hasSelectedUri",
+          "command": "pathological.getRelativePath",
+          "group": "6_copypath"
+        },
+        {
+          "when": "explorerResourceIsFolder",
+          "command": "pathological.getAsFileSystemTree",
+          "group": "6_copypath"
         }
+      ]
     },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "lint": "eslint src/**/*.ts --fix",
-        "watch": "tsc -watch -p ./"
-    },
-    "devDependencies": {
-        "@types/node": "^20.6.3",
-        "@types/vscode": "^1.82.0",
-        "@typescript-eslint/eslint-plugin": "^6.7.2",
-        "@typescript-eslint/parser": "^6.7.2",
-        "eslint": "^8.49.0",
-        "typescript": "^5.2.2"
+    "configuration": {
+      "title": "Pathological",
+      "properties": {
+        "pathological.closedFolder": {
+          "type": "string",
+          "default": "📁"
+        },
+        "pathological.openFolder": {
+          "type": "string",
+          "default": "📂"
+        }
+      }
     }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "lint": "eslint \"src/**/*.ts\"",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.1",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.6.3",
+    "@types/vscode": "^1.82.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
+    "@vscode/test-electron": "^2.3.0",
+    "eslint": "^8.49.0",
+    "glob": "^7.1.4",
+    "mocha": "^10.2.0",
+    "source-map-support": "^0.5.12",
+    "typescript": "^5.2.2"
+  }
 }
