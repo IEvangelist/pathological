@@ -12,9 +12,17 @@ Select the initial target file or folder in the explorer, then select the final 
 
 For example, right-clicking on the following file path and choosing the **`Select for Relative Path`**:
 
-`C:\Users\dapine\source\repos\pathological.globbing\src\Pathological.Globbing\Abstractions\IBasePathOption.cs`
+```
+C:\Users\dapine\source\repos\pathological.globbing\src\Pathological.Globbing\Abstractions\IBasePathOption.cs
+```
 
-and then right-clicking on the following file path and choosing the **`Copy Relative Path for Selected`** option would copy the following to your clipboard:
+and then right-clicking on the following file path and choosing the **`Copy Relative Path for Selected`** option:
+
+```
+C:\Users\dapine\source\repos\pathological.globbing\.github\workflows\publish-nuget.yml
+```
+
+would copy the following to your clipboard:
 
 ```
 ..\..\..\.github\workflows\publish-nuget.yml
@@ -78,4 +86,4 @@ The control characters are defined in the `PathologicalConfiguration` type. The 
 
 Settings can be changed by adding the following to your `settings.json` file, or through the UI:
 
-![VS Code: Settings for "pathological" extension.](assets\pathological-settings.png)
+![VS Code: Settings for "pathological" extension.](./assets/pathological-settings.png)
