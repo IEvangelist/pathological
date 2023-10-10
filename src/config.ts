@@ -6,15 +6,15 @@ import { PathologicalConfiguration } from "./types/pathological-configuration";
  * @returns The configuration object containing the closed and open folder icons.
  */
 export function getConfiguration(): PathologicalConfiguration {
-    const config = workspace.getConfiguration("pathological");
+    const config = workspace.getConfiguration();
 
-    const closedFolder = config.get("closedFolder", "📁");
-    const openFolder = config.get("openFolder", "📂");
-    const verticalLine = config.get("verticalLine", "│");
-    const horizontalLine = config.get("horizontalLine", "─");
-    const junction = config.get("junction", "├");
-    const corner = config.get("corner", "└");
-    const indent = config.get("indent", 4);
+    const closedFolder = config.get("pathological.closedFolder", "📁");
+    const openFolder = config.get("pathological.openFolder", "📂");
+    const verticalLine = config.get("pathological.verticalLine", "│");
+    const horizontalLine = config.get("pathological.horizontalLine", "─");
+    const junction = config.get("pathological.junction", "├");
+    const corner = config.get("pathological.corner", "└");
+    const indent = config.get("pathological.indent", 4);
 
     return {
         closedFolder,
