@@ -28,6 +28,9 @@ would copy the following to your clipboard:
 ..\..\..\.github\workflows\publish-nuget.yml
 ```
 
+> **Note**
+> This is following the **`Select for Compare`** and corresponding **`Compare with Selected`**.
+
 ### Copy Directory Tree
 
 Pathological allows you to copy the directory tree of the current file to your clipboard. For example, given the following folder structure:
