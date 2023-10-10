@@ -26,9 +26,13 @@ export function getRelativePath(firstUri: Uri, secondUri: Uri): string | null {
 
         const relativePath = relative(dirname(firstUri.fsPath), secondUri.fsPath);
 
-        const normalizedPath = normalize(relativePath);
+        
 
-        return normalizedPath;
+        return relativePath;
+
+        // const normalizedPath = normalize(relativePath);
+
+        // return normalizedPath;
 
     } catch (error) {
         return null;

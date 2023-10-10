@@ -20,8 +20,9 @@ function sortNodes(nodeA: FileTreeNode, nodeB: FileTreeNode): number {
 
 function buildFileTree(
     node: FileTreeNode,
-    config: PathologicalConfiguration, 
-    depth: number = 0): string {
+    config: PathologicalConfiguration,
+    depth: number = 0,
+    isLast: boolean = true): string {
     const {
         closedFolder,
         openFolder,
@@ -32,24 +33,23 @@ function buildFileTree(
         indent,
     } = config;
 
-    const indentString = ' '.repeat(depth * indent);
+    const indentString = `${depth > 1 ? verticalLine : ' '}   `.repeat(depth * indent);
 
     if (!node.children || node.children.length === 0) {
-        return `${indentString}${closedFolder} ${node.name}\n`;
+        return `${indentString}${isLast ? corner : junction}${closedFolder} ${node.name}\n`;
     }
 
     node.children.sort(sortNodes);
 
-    let tree = `${indentString}${openFolder} ${node.name}\n`;
+    let tree = `${indentString}${isLast ? corner : junction}${openFolder} ${node.name}\n`;
 
     for (let i = 0; i < node.children.length; i++) {
-        const isLast = i === node.children.length - 1;
         const child = node.children[i];
 
-        const subtree = buildFileTree(child, config, depth + 1);
+        const isLastChild = i === node.children.length - 1;
+        const subtree = buildFileTree(child, config, depth + 1, isLastChild);
 
-        const prefix = isLast ? corner : junction;
-        tree += `${indentString}${prefix}${horizontalLine.repeat(indent - 1)}${subtree}`;
+        tree += `${subtree}`;
     }
 
     return tree;
