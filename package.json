@@ -53,11 +53,38 @@
       "properties": {
         "pathological.closedFolder": {
           "type": "string",
+          "description": "The string representation of a closed folder when rendering as a file-system tree.",
           "default": "📁"
         },
         "pathological.openFolder": {
           "type": "string",
+          "description": "The string representation of an open folder when rendering as a file-system tree.",
           "default": "📂"
+        },
+        "pathological.verticalLine": {
+          "type": "string",
+          "description": "The string representation of a vertical line when rendering as a file-system tree.",
+          "default": "│"
+        },
+        "pathological.horizontalLine": {
+          "type": "string",
+          "description": "The string representation of a horizontal line when rendering as a file-system tree.",
+          "default": "─"
+        },
+        "pathological.corner": {
+          "type": "string",
+          "description": "The string representation of a corner when rendering as a file-system tree.",
+          "default": "└"
+        },
+        "pathological.junction": {
+          "type": "string",
+          "description": "The string representation of a junction when rendering as a file-system tree.",
+          "default": "├"
+        },
+        "pathological.indent": {
+          "type": "number",
+          "description": "The number of spaces to indent when rendering as a file-system tree.",
+          "default": 4
         }
       }
     }
