@@ -14,7 +14,7 @@ const setSelectedUri = (uri: Uri | undefined) => {
         "setContext",
         "pathological.hasSelectedUri",
         !!selectedUri);
-}
+};
 
 /**
  * Activates the Pathological extension.

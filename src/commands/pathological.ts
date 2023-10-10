@@ -1,7 +1,7 @@
 import { basename, dirname, join, normalize, relative } from "path";
 import { readdirSync, statSync } from "fs";
 import { Uri } from "vscode";
-import { FileTreeNode } from "../models/file-tree-node";
+import { FileTreeNode } from "../types/file-tree-node";
 import { getConfiguration } from "../config";
 
 /**
@@ -26,9 +26,13 @@ export function getRelativePath(firstUri: Uri, secondUri: Uri): string | null {
 
         const relativePath = relative(dirname(firstUri.fsPath), secondUri.fsPath);
 
-        const normalizedPath = normalize(relativePath);
+        
 
-        return normalizedPath;
+        return relativePath;
+
+        // const normalizedPath = normalize(relativePath);
+
+        // return normalizedPath;
 
     } catch (error) {
         return null;

@@ -1,17 +1,11 @@
 import { workspace } from "vscode";
-import { PathologicalConfiguration } from "./models/pathological-configuration";
-
-let cachedConfig: PathologicalConfiguration | undefined;
+import { PathologicalConfiguration } from "./types/pathological-configuration";
 
 /**
  * Retrieves the configuration for the Pathological extension.
  * @returns The configuration object containing the closed and open folder icons.
  */
 export function getConfiguration(): PathologicalConfiguration {
-    if (cachedConfig !== undefined) {
-        return cachedConfig;
-    }
-    
     const config = workspace.getConfiguration("pathological");
 
     const closedFolder = config.get("closedFolder", "📁");
@@ -22,7 +16,7 @@ export function getConfiguration(): PathologicalConfiguration {
     const corner = config.get("corner", "└");
     const indent = config.get("indent", 4);
 
-    cachedConfig = {
+    return {
         closedFolder,
         openFolder,
         verticalLine,
@@ -31,6 +25,4 @@ export function getConfiguration(): PathologicalConfiguration {
         corner,
         indent,
     };
-
-    return cachedConfig;
 }
