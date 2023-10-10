@@ -10,7 +10,10 @@ suite("buildTree", () => {
             isDirectory: true,
             children: [],
         };
-        assert.strictEqual(buildTree(node), "");
+
+        const tree = buildTree(node);
+
+        assert.equal(tree, "└───📁 root\n");
     });
 
     test("should return a tree with one file", () => {
@@ -24,7 +27,10 @@ suite("buildTree", () => {
                 },
             ],
         };
-        assert.strictEqual(buildTree(node), "└── root\n    └── file1.txt\n");
+
+        const tree = buildTree(node);
+
+        assert.equal(tree, "└──📂 root\n    └─── file1.txt\n");
     });
 
     test("should return a tree with one directory", () => {
@@ -39,7 +45,10 @@ suite("buildTree", () => {
                 },
             ],
         };
-        assert.strictEqual(buildTree(node), "└── root\n    └── dir1\n");
+
+        const tree = buildTree(node);
+
+        assert.equal(tree, "└──📂 root\n    └───📁 dir1\n");
     });
 
     test("should return a tree with multiple files and directories", () => {
@@ -78,9 +87,12 @@ suite("buildTree", () => {
                 },
             ],
         };
-        assert.strictEqual(
-            buildTree(node),
-            "└── root\n    ├── dir1\n    │   └── file2.txt\n    ├── dir2\n    │   ├── dir3\n    │   └── file3.txt\n    └── file1.txt\n"
+
+        const tree = buildTree(node);
+
+        assert.equal(
+            tree,
+            "└──📂 root\n    ├──📂 dir1\n    │   └─── file2.txt\n    ├──📂 dir2\n    │   ├───📁 dir3\n    │   └─── file3.txt\n    └─── file1.txt\n"
         );
     });
 
@@ -95,6 +107,9 @@ suite("buildTree", () => {
                 },
             ],
         };
-        assert.strictEqual(buildTree(node), "└── root\n    └── file1.txt\n");
+
+        const tree = buildTree(node);
+
+        assert.equal(tree, "└──📂 root\n    └─── file1.txt\n");
     });
 });
