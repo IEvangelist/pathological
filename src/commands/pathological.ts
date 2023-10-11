@@ -1,8 +1,7 @@
 import { basename, dirname, join, normalize, relative } from "path";
-import { readdirSync, statSync } from "fs";
 import { Uri } from "vscode";
-import { FileTreeNode } from "../types/file-tree-node";
 import { buildTree } from "../tree-builder";
+import { generateFileSystemTree } from "../file-node-resolver";
 
 /**
  * Returns the relative path between two Uri objects.
@@ -48,30 +47,4 @@ export function getAsFileSystemTree(uri: Uri): string {
     const tree = buildTree(fileSystemTree);
 
     return tree;
-}
-
-/**
- * Recursively generates a tree of file system nodes for the given folder path.
- * @param folderPath The path of the folder to generate the tree for.
- * @returns The root node of the generated file system tree.
- */
-function generateFileSystemTree(folderPath: string): FileTreeNode {
-    const stats = statSync(folderPath);
-    const nodeName = basename(folderPath);
-
-    const node: FileTreeNode = {
-        name: nodeName,
-        isDirectory: stats.isDirectory(),
-    };
-
-    if (node.isDirectory) {
-        const files = readdirSync(folderPath);
-
-        node.children = files.map((file) => {
-            const filePath = join(folderPath, file);
-            return generateFileSystemTree(filePath);
-        });
-    }
-
-    return node;
 }

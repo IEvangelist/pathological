@@ -1,6 +1,9 @@
 import { ExtensionContext, commands, Uri, window, env } from "vscode";
 import { getAsFileSystemTree, getRelativePath } from "./commands/pathological";
 
+/**
+ * The URI of the currently selected item, if any.
+ */
 let selectedUri: Uri | undefined;
 
 /**
