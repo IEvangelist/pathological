@@ -2,18 +2,17 @@ import { basename, dirname, join, normalize, relative } from "path";
 import { Uri } from "vscode";
 import { buildTree } from "../tree-builder";
 import { generateFileSystemTree } from "../file-node-resolver";
+import { getConfiguration } from "../config-reader";
 
 /**
  * Returns the relative path between two Uri objects.
  * @param firstUri The first Uri object.
  * @param secondUri The second Uri object.
- * @param normalizedPath Whether to normalize the path.
  * @returns The relative path between the two Uri objects, or null if the URIs are not compatible or an error occurs.
  */
 export function getRelativePath(
     firstUri: Uri,
-    secondUri: Uri,
-    normalizedPath: boolean = false): string | null {
+    secondUri: Uri): string | null {
     try {
         if (firstUri.fsPath === secondUri.fsPath) {
             return basename(firstUri.fsPath);
@@ -29,7 +28,9 @@ export function getRelativePath(
 
         const relativePath = relative(dirname(firstUri.fsPath), secondUri.fsPath);
 
-        return normalizedPath
+        const config = getConfiguration();
+
+        return config.normalizePath
             ? normalize(relativePath)
             : relativePath;
     } catch (error) {

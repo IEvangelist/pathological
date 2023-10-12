@@ -15,6 +15,7 @@ export function getConfiguration(): PathologicalConfiguration {
     const junction = config.get("pathological.junction", "├");
     const corner = config.get("pathological.corner", "└");
     const indent = config.get("pathological.indent", 4);
+    const normalizePath = config.get("pathological.normalizePath", false);
 
     return {
         closedFolder,
@@ -24,5 +25,6 @@ export function getConfiguration(): PathologicalConfiguration {
         junction,
         corner,
         indent,
+        normalizePath
     };
 }

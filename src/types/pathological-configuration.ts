@@ -44,4 +44,10 @@ export interface PathologicalConfiguration {
      * @default 4
      */
     indent: number;
+
+    /**
+     * Whether to normalize the path.
+     * @default false
+     */
+    normalizePath: boolean;
 }
