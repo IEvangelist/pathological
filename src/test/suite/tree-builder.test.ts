@@ -1,86 +1,110 @@
 import * as assert from "assert";
 
 import { buildTree } from "../../tree-builder";
-import { FileTreeNode } from "../../types/file-tree-node";
+import { IFileTreeNode, FileTreeNode } from "../../types/file-tree-node";
 
 suite("buildTree", () => {
     test("should return an empty string for an empty node", () => {
-        const node: FileTreeNode = {
+        const node: IFileTreeNode = {
             name: "root",
             isDirectory: true,
+            isFile: false,
+            depth: 0,
             children: [],
         };
 
-        const tree = buildTree(node);
+        const tree = buildTree(new FileTreeNode(node));
 
         assert.equal(tree, "└───📁 root\n");
     });
 
     test("should return a tree with one file", () => {
-        const node: FileTreeNode = {
+        const node: IFileTreeNode = {
             name: "root",
             isDirectory: true,
+            isFile: false,
+            depth: 0,
             children: [
                 {
                     name: "file1.txt",
                     isDirectory: false,
+                    isFile: true,
+                    depth: 1
                 },
             ],
         };
 
-        const tree = buildTree(node);
+        const tree = buildTree(new FileTreeNode(node));
 
-        assert.equal(tree, "└──📂 root\n    └─── file1.txt\n");
+        assert.equal(tree, "└───📂 root\n    └─── file1.txt\n");
     });
 
     test("should return a tree with one directory", () => {
-        const node: FileTreeNode = {
+        const node: IFileTreeNode = {
             name: "root",
             isDirectory: true,
+            isFile: false,
+            depth: 0,
             children: [
                 {
                     name: "dir1",
                     isDirectory: true,
+                    isFile: false,
+                    depth: 1,
                     children: [],
                 },
             ],
         };
 
-        const tree = buildTree(node);
+        const tree = buildTree(new FileTreeNode(node));
 
-        assert.equal(tree, "└──📂 root\n    └───📁 dir1\n");
+        assert.equal(tree, "└───📂 root\n    └───📁 dir1\n");
     });
 
     test("should return a tree with multiple files and directories", () => {
-        const node: FileTreeNode = {
+        const node: IFileTreeNode = {
             name: "root",
             isDirectory: true,
+            isFile: false,
+            depth: 0,
             children: [
                 {
                     name: "file1.txt",
                     isDirectory: false,
+                    isFile: true,
+                    depth: 1
                 },
                 {
                     name: "dir1",
                     isDirectory: true,
+                    isFile: false,
+                    depth: 1,
                     children: [
                         {
                             name: "file2.txt",
                             isDirectory: false,
+                            isFile: true,
+                            depth: 2
                         },
                     ],
                 },
                 {
                     name: "dir2",
                     isDirectory: true,
+                    isFile: false,
+                    depth: 1,
                     children: [
                         {
                             name: "file3.txt",
                             isDirectory: false,
+                            isFile: true,
+                            depth: 2
                         },
                         {
                             name: "dir3",
                             isDirectory: true,
+                            isFile: false,
+                            depth: 2,
                             children: [],
                         },
                     ],
@@ -88,28 +112,32 @@ suite("buildTree", () => {
             ],
         };
 
-        const tree = buildTree(node);
+        const tree = buildTree(new FileTreeNode(node));
 
         assert.equal(
             tree,
-            "└──📂 root\n    ├──📂 dir1\n    │   └─── file2.txt\n    ├──📂 dir2\n    │   ├───📁 dir3\n    │   └─── file3.txt\n    └─── file1.txt\n"
+            "└───📂 root\n    ├───📂 dir1\n    │   └─── file2.txt\n    ├───📂 dir2\n    │   ├───📁 dir3\n    │   └─── file3.txt\n    └─── file1.txt\n"
         );
     });
 
     test("should return a tree with one file", () => {
-        const node: FileTreeNode = {
+        const node: IFileTreeNode = {
             name: "root",
             isDirectory: true,
+            isFile: false,
+            depth: 0,
             children: [
                 {
                     name: "file1.txt",
                     isDirectory: false,
+                    isFile: true,
+                    depth: 1
                 },
             ],
         };
 
-        const tree = buildTree(node);
+        const tree = buildTree(new FileTreeNode(node));
 
-        assert.equal(tree, "└──📂 root\n    └─── file1.txt\n");
+        assert.equal(tree, "└───📂 root\n    └─── file1.txt\n");
     });
 });

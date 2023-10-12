@@ -1,6 +1,6 @@
 # Pathological
 
-Pathological is a VS Code extension that provides convenient and developer-friendly path APIs. With Pathological, you can copy the current directory in the file-system as a tree representation with fully customizable control characters. You can also select relative paths between explorer selections.
+Pathological is a VS Code extension that provides convenient and developer-friendly _path_ APIs. With Pathological, you can copy a selected directory in the **Explorer** as a tree representation with fully customizable control characters. You can also select relative paths between explorer selections.
 
 ## Features
 
@@ -13,13 +13,13 @@ Select the initial target file or folder in the explorer, then select the final 
 For example, right-clicking on the following file path and choosing the **`Select for Relative Path`**:
 
 ```
-C:\Users\dapine\source\repos\pathological.globbing\src\Pathological.Globbing\Abstractions\IBasePathOption.cs
+.\pathological.globbing\src\Pathological.Globbing\Abstractions\IBasePathOption.cs
 ```
 
 and then right-clicking on the following file path and choosing the **`Copy Relative Path for Selected`** option:
 
 ```
-C:\Users\dapine\source\repos\pathological.globbing\.github\workflows\publish-nuget.yml
+.\pathological.globbing\.github\workflows\publish-nuget.yml
 ```
 
 would copy the following to your clipboard:

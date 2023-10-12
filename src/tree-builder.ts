@@ -1,4 +1,4 @@
-import { getConfiguration } from "./config";
+import { getConfiguration } from "./config-reader";
 import { FileTreeNode } from "./types/file-tree-node";
 import { PathologicalConfiguration } from "./types/pathological-configuration";
 
@@ -10,93 +10,74 @@ import { PathologicalConfiguration } from "./types/pathological-configuration";
 export function buildTree(node: FileTreeNode): string {
     const config = getConfiguration();
 
-    const sortedNode = { ...node };
-    sortedNode.children = [...(node.children || [])].sort(sortNodes);
-
-    return buildFileTree(sortedNode, config);
+    return buildFileTree(node, config);
 }
 
-/**
- * Sorts two file tree nodes based on whether they are directories or not and their names.
- * @param nodeA - The first file tree node to compare.
- * @param nodeB - The second file tree node to compare.
- * @returns A number indicating the sort order of the two nodes.
- */
-function sortNodes(nodeA: FileTreeNode, nodeB: FileTreeNode): number {
-    if (nodeA.isDirectory === nodeB.isDirectory) {
-        return nodeA.name.localeCompare(nodeB.name);
-    }
-    return nodeA.isDirectory ? -1 : 1;
-}
-
-/**
- * Builds a string representation of a file tree starting from the given node.
- * @param node The root node of the file tree.
- * @param config The configuration options for building the file tree.
- * @param depth The current depth of the node in the file tree.
- * @param isLast Whether the node is the last child of its parent.
- * @param isSibling Whether the node is a sibling of the previous node.
- * @returns A string representation of the file tree.
- */
 function buildFileTree(
     node: FileTreeNode,
     config: PathologicalConfiguration,
-    depth: number = 0,
-    isLast: boolean = true,
-    isSibling: boolean = false): string {
+    previousTree: string = ""): string {
+    const { verticalLine } = config;
+
+    if (node.isLeafNotEmpty) {
+        return directoryNotEmpty(previousTree, config);
+    }
+
+    let result = "";
+
+    if (node.isRoot) {
+        result += directoryItem(true, previousTree, node.name, true, config);
+        previousTree += previousContent(true, verticalLine);
+    }
+
+    node.children?.forEach((child, index) => {
+        const isLastChild = index === node.children!.length - 1;
+
+        if (child.isDirectory) {
+            result += directoryItem(isLastChild, previousTree, child.name, true, config);
+            const previousSubtree = previousTree + previousContent(isLastChild, verticalLine);
+            result += buildFileTree(child, config, previousSubtree);
+        }
+
+        if (child.isFile) {
+            result += directoryItem(isLastChild, previousTree, child.name, false, config);
+        }
+    });
+
+    return result;
+}
+
+function directoryNotEmpty(previousContent = "", config: PathologicalConfiguration) {
+    const { corner, horizontalLine, indent, openFolder } = config;
+
+    return `${previousContent}${corner}${horizontalLine.repeat(indent - 1)}${openFolder}\n`;
+}
+
+function previousContent(isLast: boolean, verticalLine: string): string {
+    return `${isLast ? ' ' : verticalLine}${" ".repeat(3)}`;
+}
+
+function directoryItem(
+    isLast: boolean,
+    previousContent = '',
+    itemName = '',
+    isDirectory = false,
+    config: PathologicalConfiguration) {
     const {
-        closedFolder,
         openFolder,
-        verticalLine,
         horizontalLine,
         junction,
         corner,
         indent,
     } = config;
 
-    let indentString = '';
-    if (isSibling) {
-        const count = depth * indent;
-        for (let i = 0; i < count; ++ i) {
-            const lead = i % indent;
-            indentString += i > 0 && lead === 0 && isSibling 
-                ? verticalLine 
-                : ' ';
-        }
-    } else {
-        indentString = ' '.repeat(depth * indent);
-    }
+    const linePrefix = isLast ? corner : junction;
+    const itemText = isDirectory
+        ? `${openFolder} ${itemName}`
+        : ` ${itemName}`;
 
-    let tree = indentString;
+    const directoryItemRepresentation =
+        `${linePrefix}${horizontalLine.repeat(indent - 2)}${itemText}`;
 
-    if (!node.children || node.children.length === 0) {
-        const folderEmoji = node.isDirectory ? closedFolder : '';
-
-        tree = `${indentString}${isLast ? corner : junction}`;
-        tree += `${horizontalLine.repeat(indent - 1)}${folderEmoji} ${node.name}\n`;
-
-        return tree;
-    }
-
-    node.children.sort(sortNodes);
-
-    if (node.isDirectory) {
-        tree = `${indentString}${isLast ? corner : junction}`;
-        tree += `${horizontalLine.repeat(indent - 2)}${openFolder} ${node.name}\n`;
-
-        for (let i = 0; i < node.children.length; i++) {
-            const child = node.children[i];
-
-            const isLastChild = i === node.children.length - 1;
-            const isSubtreeSibling = isSibling || !isLastChild;
-            const subtree = buildFileTree(child, config, depth + 1, isLastChild, isSubtreeSibling);
-
-            tree += `${subtree}`;
-        }
-    } else {
-        tree += `${indentString}${isLast ? corner : junction}`;
-        tree += `${horizontalLine.repeat(indent - 1)} ${node.name}\n`;
-    }
-
-    return tree;
+    return `${previousContent}${directoryItemRepresentation}\n`;
 }
