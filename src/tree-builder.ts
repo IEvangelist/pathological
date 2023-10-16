@@ -8,9 +8,9 @@ import { PathologicalConfiguration } from "./types/pathological-configuration";
  * @returns A string representation of the file tree.
  */
 export function buildTree(node: FileTreeNode): string {
-    const config = getConfiguration();
+  const config = getConfiguration();
 
-    return buildFileTree(node, config);
+  return buildFileTree(node, config);
 }
 
 /**
@@ -20,38 +20,35 @@ export function buildTree(node: FileTreeNode): string {
  * @param previousTree The string representation of the previous tree level.
  * @returns A string representation of the file tree structure.
  */
-function buildFileTree(
-    node: FileTreeNode,
-    config: PathologicalConfiguration,
-    previousTree: string = ""): string {
-    const { verticalLine } = config;
+function buildFileTree(node: FileTreeNode, config: PathologicalConfiguration, previousTree: string = ""): string {
+  const { verticalLine } = config;
 
-    if (node.isLeafNotEmpty) {
-        return toLeadingCornerLine(previousTree, config);
+  if (node.isLeafNotEmpty) {
+    return toLeadingCornerLine(previousTree, config);
+  }
+
+  let result = "";
+
+  if (node.isRoot) {
+    result += toSingleLine(true, previousTree, node.name, true, config);
+    previousTree += toLeadingLine(true, verticalLine);
+  }
+
+  node.children?.forEach((child, index) => {
+    const isLastChild = index === node.children!.length - 1;
+
+    if (child.isDirectory) {
+      result += toSingleLine(isLastChild, previousTree, child.name, true, config);
+      const previousSubtree = `${previousTree}${toLeadingLine(isLastChild, verticalLine)}`;
+      result += buildFileTree(child, config, previousSubtree);
     }
 
-    let result = "";
-
-    if (node.isRoot) {
-        result += toSingleLine(true, previousTree, node.name, true, config);
-        previousTree += toLeadingLine(true, verticalLine);
+    if (child.isFile) {
+      result += toSingleLine(isLastChild, previousTree, child.name, false, config);
     }
+  });
 
-    node.children?.forEach((child, index) => {
-        const isLastChild = index === node.children!.length - 1;
-
-        if (child.isDirectory) {
-            result += toSingleLine(isLastChild, previousTree, child.name, true, config);
-            const previousSubtree = `${previousTree}${toLeadingLine(isLastChild, verticalLine)}`;
-            result += buildFileTree(child, config, previousSubtree);
-        }
-
-        if (child.isFile) {
-            result += toSingleLine(isLastChild, previousTree, child.name, false, config);
-        }
-    });
-
-    return result;
+  return result;
 }
 
 /**
@@ -61,9 +58,9 @@ function buildFileTree(
  * @returns A string representing the leading line of a folder tree node.
  */
 function toLeadingCornerLine(previousContent = "", config: PathologicalConfiguration) {
-    const { corner, horizontalLine, indent, openFolder } = config;
+  const { corner, horizontalLine, indent, openFolder } = config;
 
-    return `${previousContent}${corner}${horizontalLine.repeat(indent - 1)}${openFolder}\n`;
+  return `${previousContent}${corner}${horizontalLine.repeat(indent - 1)}${openFolder}\n`;
 }
 
 /**
@@ -73,7 +70,7 @@ function toLeadingCornerLine(previousContent = "", config: PathologicalConfigura
  * @returns A string representing the leading line of a tree node.
  */
 function toLeadingLine(isLast: boolean, verticalLine: string): string {
-    return `${isLast ? ' ' : verticalLine}${" ".repeat(3)}`;
+  return `${isLast ? " " : verticalLine}${" ".repeat(3)}`;
 }
 
 /**
@@ -86,26 +83,18 @@ function toLeadingLine(isLast: boolean, verticalLine: string): string {
  * @returns A string representing the directory item in a single line.
  */
 function toSingleLine(
-    isLast: boolean,
-    previousContent = '',
-    itemName = '',
-    isDirectory = false,
-    config: PathologicalConfiguration) {
-    const {
-        openFolder,
-        horizontalLine,
-        junction,
-        corner,
-        indent,
-    } = config;
+  isLast: boolean,
+  previousContent = "",
+  itemName = "",
+  isDirectory = false,
+  config: PathologicalConfiguration
+) {
+  const { openFolder, horizontalLine, junction, corner, indent } = config;
 
-    const linePrefix = isLast ? corner : junction;
-    const itemText = isDirectory
-        ? `${openFolder} ${itemName}`
-        : ` ${itemName}`;
+  const linePrefix = isLast ? corner : junction;
+  const itemText = isDirectory ? `${openFolder} ${itemName}` : ` ${itemName}`;
 
-    const directoryItemRepresentation =
-        `${linePrefix}${horizontalLine.repeat(indent - 2)}${itemText}`;
+  const directoryItemRepresentation = `${linePrefix}${horizontalLine.repeat(indent - 2)}${itemText}`;
 
-    return `${previousContent}${directoryItemRepresentation}\n`;
+  return `${previousContent}${directoryItemRepresentation}\n`;
 }
