@@ -2,11 +2,11 @@
 
 Pathological is a VS Code extension that provides convenient and developer-friendly _path_ APIs. With Pathological, you can copy a selected directory in the **Explorer** as a tree representation with fully customizable control characters. You can also select relative paths between explorer selections.
 
-## Features
+## ✅ Features
 
 The following features are available in Pathological:
 
-### Copy Relative Path
+### 📁 Copy Relative Path
 
 Select the initial target file or folder in the explorer, then select the final target file or folder by right-clicking it and choosing the **`Select for Relative Path`** option. The relative path between the two selections will be copied to your clipboard.
 
@@ -31,7 +31,7 @@ would copy the following to your clipboard:
 > **Note**
 > This is following the **`Select for Compare`** and corresponding **`Compare with Selected`**.
 
-### Copy Directory Tree
+### 📂 Copy Directory Tree
 
 Pathological allows you to copy the directory tree of the current file to your clipboard. For example, given the following folder structure:
 
@@ -67,11 +67,11 @@ The following is copied to your clipboard:
                 └─── Pathological.Globbing.pdb
 ```
 
-## Configuration
+## ⚙️ Configuration
 
 Pathological is fully configurable. You can change the control characters used to represent the tree, the indentation, and the file and folder icons. You can also change the default behavior of the **`Copy Relative Path`** command to copy the absolute path instead of the relative path.
 
-### Control Characters
+### 🔠 Control Characters
 
 The control characters are defined in the `PathologicalConfiguration` type. The default values are:
 
