@@ -5,8 +5,10 @@
   "version": "0.0.1",
   "publisher": "IEvangelist",
   "repository": "https://github.com/IEvangelist/pathological",
+  "license": "MIT",
   "engines": {
-    "vscode": "^1.82.2"
+    "vscode": "^1.82.2",
+    "node": ">=16"
   },
   "categories": [
     "Other"
@@ -95,9 +97,13 @@
     }
   },
   "scripts": {
+    "clean": "rimraf ./dist ./out",
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
-    "lint": "eslint \"src/**/*.ts\"",
+    "lint": "eslint . --ext .ts",
+    "lint-fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write \"**/*.ts\"",
+    "format-check": "prettier --check \"**/*.ts\"",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile",
     "test": "node ./out/test/runTest.js"
@@ -114,6 +120,16 @@
     "glob": "^7.1.4",
     "mocha": "^10.2.0",
     "source-map-support": "^0.5.12",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.3",
+    "rimraf": "^3.0.2"
+  },
+  "dependencies": {
+    "@vscode/vsce": "^2.21.1"
+  },
+  "sponsor": {
+    "url": "https://github.com/sponsors/IEvangelist"
   }
 }

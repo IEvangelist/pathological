@@ -11,12 +11,9 @@ let selectedUri: Uri | undefined;
  * @param uri The URI to set as selected.
  */
 const setSelectedUri = (uri: Uri | undefined) => {
-    selectedUri = uri;
+  selectedUri = uri;
 
-    commands.executeCommand(
-        "setContext",
-        "pathological.hasSelectedUri",
-        !!selectedUri);
+  commands.executeCommand("setContext", "pathological.hasSelectedUri", !!selectedUri);
 };
 
 /**
@@ -24,56 +21,44 @@ const setSelectedUri = (uri: Uri | undefined) => {
  * @param context The extension context.
  */
 export function activate(context: ExtensionContext) {
-    const selectUriForRelativeDisposable = commands.registerCommand(
-        "pathological.selectUriForRelative",
-        (uri: Uri) => {
-            if (uri && uri.scheme === "file") {
-                setSelectedUri(uri);
-            }
-        });
+  const selectUriForRelativeDisposable = commands.registerCommand("pathological.selectUriForRelative", (uri: Uri) => {
+    if (uri && uri.scheme === "file") {
+      setSelectedUri(uri);
+    }
+  });
 
-    const getRelativePathDisposable = commands.registerCommand(
-        "pathological.getRelativePath",
-        (uri: Uri) => {
-            if (!selectedUri) {
-                // Shouldn't be possible...
-                return;
-            }
+  const getRelativePathDisposable = commands.registerCommand("pathological.getRelativePath", (uri: Uri) => {
+    if (!selectedUri) {
+      // Shouldn't be possible...
+      return;
+    }
 
-            const relativePath = getRelativePath(selectedUri, uri);
+    const relativePath = getRelativePath(selectedUri, uri);
 
-            if (relativePath === null) {
-                window.showErrorMessage(
-                    "An error occurred while getting the relative path between the two files."
-                );
-            } else {
-                env.clipboard.writeText(relativePath);
+    if (relativePath === null) {
+      window.showErrorMessage("An error occurred while getting the relative path between the two files.");
+    } else {
+      env.clipboard.writeText(relativePath);
 
-                window.showInformationMessage(
-                    `The ${relativePath} path has been copied to clipboard.`
-                );
+      window.showInformationMessage(`The ${relativePath} path has been copied to clipboard.`);
 
-                setSelectedUri(undefined);
-            }
-        });
+      setSelectedUri(undefined);
+    }
+  });
 
-    const getFileSystemTreeDisposable = commands.registerCommand(
-        "pathological.getAsFileSystemTree",
-        (uri: Uri) => {
-            if (uri && uri.scheme === "file") {
-                const fileSystemTree = getAsFileSystemTree(uri);
+  const getFileSystemTreeDisposable = commands.registerCommand("pathological.getAsFileSystemTree", (uri: Uri) => {
+    if (uri && uri.scheme === "file") {
+      const fileSystemTree = getAsFileSystemTree(uri);
 
-                env.clipboard.writeText(fileSystemTree);
+      env.clipboard.writeText(fileSystemTree);
 
-                window.showInformationMessage(
-                    fileSystemTree
-                );
-            }
-        });
+      window.showInformationMessage(fileSystemTree);
+    }
+  });
 
-    context.subscriptions.push(selectUriForRelativeDisposable);
-    context.subscriptions.push(getRelativePathDisposable);
-    context.subscriptions.push(getFileSystemTreeDisposable);
+  context.subscriptions.push(selectUriForRelativeDisposable);
+  context.subscriptions.push(getRelativePathDisposable);
+  context.subscriptions.push(getFileSystemTreeDisposable);
 
-    console.log("Pathological extension activated.");
+  console.log("Pathological extension activated.");
 }

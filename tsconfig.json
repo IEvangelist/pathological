@@ -1,17 +1,16 @@
 {
+	"include": [
+		"src"
+	],
 	"compilerOptions": {
-		"module": "commonjs",
-		"target": "es2020",
-		"lib": [
-			"es2020"
-		],
-		"outDir": "out",
+		"module": "esnext",
+		"target": "ES2020",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
 		"sourceMap": true,
 		"strict": true,
-		"rootDir": "src"
-	},
-	"exclude": [
-		"node_modules",
-		".vscode-test"
-	]
+		"moduleResolution": "node",
+		"outDir": "out",
+		"resolveJsonModule": true
+	}
 }

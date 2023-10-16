@@ -10,32 +10,28 @@ import { getConfiguration } from "../config-reader";
  * @param secondUri The second Uri object.
  * @returns The relative path between the two Uri objects, or null if the URIs are not compatible or an error occurs.
  */
-export function getRelativePath(
-    firstUri: Uri,
-    secondUri: Uri): string | null {
-    try {
-        if (firstUri.fsPath === secondUri.fsPath) {
-            return basename(firstUri.fsPath);
-        }
-
-        if (firstUri.scheme !== secondUri.scheme) {
-            return null;
-        }
-
-        if (firstUri.scheme !== "file") {
-            return null;
-        }
-
-        const relativePath = relative(dirname(firstUri.fsPath), secondUri.fsPath);
-
-        const config = getConfiguration();
-
-        return config.normalizePath
-            ? normalize(relativePath)
-            : relativePath;
-    } catch (error) {
-        return null;
+export function getRelativePath(firstUri: Uri, secondUri: Uri): string | null {
+  try {
+    if (firstUri.fsPath === secondUri.fsPath) {
+      return basename(firstUri.fsPath);
     }
+
+    if (firstUri.scheme !== secondUri.scheme) {
+      return null;
+    }
+
+    if (firstUri.scheme !== "file") {
+      return null;
+    }
+
+    const relativePath = relative(dirname(firstUri.fsPath), secondUri.fsPath);
+
+    const config = getConfiguration();
+
+    return config.normalizePath ? normalize(relativePath) : relativePath;
+  } catch (error) {
+    return null;
+  }
 }
 
 /**
@@ -44,8 +40,8 @@ export function getRelativePath(
  * @returns The formatted file system tree as a string.
  */
 export function getAsFileSystemTree(uri: Uri): string {
-    const fileSystemTree = generateFileSystemTree(uri.fsPath);
-    const tree = buildTree(fileSystemTree);
+  const fileSystemTree = generateFileSystemTree(uri.fsPath);
+  const tree = buildTree(fileSystemTree);
 
-    return tree;
+  return tree;
 }
