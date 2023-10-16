@@ -1,11 +1,11 @@
-import * as path from "path";
+import { resolve } from "path";
 
 import { runTests } from "@vscode/test-electron";
 
 async function go() {
   try {
-    const extensionDevelopmentPath = path.resolve(__dirname, "../../../");
-    const extensionTestsPath = path.resolve(__dirname, "./suite");
+    const extensionDevelopmentPath = resolve(__dirname, "../../../");
+    const extensionTestsPath = resolve(__dirname, "./suite");
 
     // Download VS Code, unzip it and run the integration test
     await runTests({

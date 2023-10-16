@@ -1,5 +1,4 @@
-import * as assert from "assert";
-
+import { equal } from "assert";
 import { buildTree } from "../../tree-builder";
 import { IFileTreeNode, FileTreeNode } from "../../types/file-tree-node";
 
@@ -15,7 +14,7 @@ suite("buildTree", () => {
 
     const tree = buildTree(new FileTreeNode(node));
 
-    assert.equal(tree, "└───📁 root\n");
+    equal(tree, "└───📁 root\n");
   });
 
   test("should return a tree with one file", () => {
@@ -36,7 +35,7 @@ suite("buildTree", () => {
 
     const tree = buildTree(new FileTreeNode(node));
 
-    assert.equal(tree, "└───📂 root\n    └─── file1.txt\n");
+    equal(tree, "└───📂 root\n    └─── file1.txt\n");
   });
 
   test("should return a tree with one directory", () => {
@@ -58,7 +57,7 @@ suite("buildTree", () => {
 
     const tree = buildTree(new FileTreeNode(node));
 
-    assert.equal(tree, "└───📂 root\n    └───📁 dir1\n");
+    equal(tree, "└───📂 root\n    └───📁 dir1\n");
   });
 
   test("should return a tree with multiple files and directories", () => {
@@ -114,7 +113,7 @@ suite("buildTree", () => {
 
     const tree = buildTree(new FileTreeNode(node));
 
-    assert.equal(
+    equal(
       tree,
       "└───📂 root\n    ├───📂 dir1\n    │   └─── file2.txt\n    ├───📂 dir2\n    │   ├───📁 dir3\n    │   └─── file3.txt\n    └─── file1.txt\n"
     );
@@ -138,6 +137,6 @@ suite("buildTree", () => {
 
     const tree = buildTree(new FileTreeNode(node));
 
-    assert.equal(tree, "└───📂 root\n    └─── file1.txt\n");
+    equal(tree, "└───📂 root\n    └─── file1.txt\n");
   });
 });
