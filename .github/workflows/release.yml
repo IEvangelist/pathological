@@ -13,7 +13,7 @@ on:
           - "major"
           - "minor"
           - "patch"
-      update-language-server: 
+      update-language-server:
         required: true
         description: "Update the language server to the latest version?"
         type: boolean
