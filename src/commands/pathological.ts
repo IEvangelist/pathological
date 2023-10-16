@@ -1,4 +1,4 @@
-import { basename, dirname, join, normalize, relative } from "path";
+import { basename, dirname, normalize, relative } from "path";
 import { Uri } from "vscode";
 import { buildTree } from "../tree-builder";
 import { generateFileSystemTree } from "../file-node-resolver";

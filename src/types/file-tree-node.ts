@@ -106,20 +106,13 @@ export class FileTreeNode implements IFileTreeNode {
     this._isDirectory = node.isDirectory;
     this._isFile = node.isFile;
     this._depth = node.depth;
-    this._children = node.children?.map(child => new FileTreeNode(child))?.sort(FileTreeNode.sortNodes);
-  }
-
-  /**
-   * Sorts two file tree nodes based on their directory status and name.
-   * Directories are sorted before files, and nodes are sorted alphabetically by name.
-   * @param nodeA The first node to compare.
-   * @param nodeB The second node to compare.
-   * @returns A negative number if nodeA should come before nodeB, a positive number if nodeA should come after nodeB, or 0 if they are equal.
-   */
-  private static sortNodes(nodeA: FileTreeNode, nodeB: FileTreeNode): number {
-    if (nodeA.isDirectory === nodeB.isDirectory) {
-      return nodeA.name.localeCompare(nodeB.name);
-    }
-    return nodeA.isDirectory ? -1 : 1;
+    this._children = node.children
+      ?.map(child => new FileTreeNode(child))
+      ?.sort((nodeA, nodeB) => {
+        if (nodeA.isDirectory === nodeB.isDirectory) {
+          return nodeA.name.localeCompare(nodeB.name);
+        }
+        return nodeA.isDirectory ? -1 : 1;
+      });
   }
 }
