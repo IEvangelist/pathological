@@ -10,6 +10,7 @@
     "vscode": "^1.82.2",
     "node": ">=16"
   },
+  "type": "module",
   "categories": [
     "Other"
   ],
