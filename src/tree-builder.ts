@@ -89,10 +89,11 @@ function toSingleLine(
   isDirectory = false,
   config: PathologicalConfiguration
 ) {
-  const { openFolder, horizontalLine, junction, corner, indent } = config;
+  const { openFolder, closedFolder, horizontalLine, junction, corner, indent } = config;
 
   const linePrefix = isLast ? corner : junction;
-  const itemText = isDirectory ? `${openFolder} ${itemName}` : ` ${itemName}`;
+  const folder = isDirectory && isLast ? closedFolder : openFolder;
+  const itemText = isDirectory ? `${folder} ${itemName}` : ` ${itemName}`;
 
   const directoryItemRepresentation = `${linePrefix}${horizontalLine.repeat(indent - 2)}${itemText}`;
 

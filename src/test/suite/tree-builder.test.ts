@@ -1,8 +1,10 @@
-import { buildTree } from "./tree-builder";
-import { IFileTreeNode, FileTreeNode } from "./types/file-tree-node";
+import { equal } from "assert";
+import { suite, test } from "mocha";
+import { buildTree } from "../../tree-builder";
+import { IFileTreeNode, FileTreeNode } from "../../types/file-tree-node";
 
-describe("buildTree", () => {
-  it("should return an empty string for an empty node", () => {
+suite("buildTree", () => {
+  test("should return an empty string for an empty node", () => {
     const node: IFileTreeNode = {
       name: "root",
       isDirectory: true,
@@ -13,10 +15,10 @@ describe("buildTree", () => {
 
     const tree = buildTree(new FileTreeNode(node));
 
-    expect(tree).toBe("└───📁 root\n");
+    equal(tree, "└──📁 root\n");
   });
 
-  it("should return a tree with one file", () => {
+  test("should return a tree with one file", () => {
     const node: IFileTreeNode = {
       name: "root",
       isDirectory: true,
@@ -34,10 +36,10 @@ describe("buildTree", () => {
 
     const tree = buildTree(new FileTreeNode(node));
 
-    expect(tree).toBe("└───📂 root\n    └─── file1.txt\n");
+    equal(tree, "└──📂 root\n   └── file1.txt\n");
   });
 
-  it("should return a tree with one directory", () => {
+  test("should return a tree with one directory", () => {
     const node: IFileTreeNode = {
       name: "root",
       isDirectory: true,
@@ -56,10 +58,10 @@ describe("buildTree", () => {
 
     const tree = buildTree(new FileTreeNode(node));
 
-    expect(tree).toBe("└───📂 root\n    └───📁 dir1\n");
+    equal(tree, "└──📂 root\n   └──📁 dir1\n");
   });
 
-  it("should return a tree with multiple files and directories", () => {
+  test("should return a tree with multiple files and directories", () => {
     const node: IFileTreeNode = {
       name: "root",
       isDirectory: true,
@@ -112,12 +114,13 @@ describe("buildTree", () => {
 
     const tree = buildTree(new FileTreeNode(node));
 
-    expect(tree).toBe(
-      "└───📂 root\n    ├───📂 dir1\n    │   └─── file2.txt\n    ├───📂 dir2\n    │   ├───📁 dir3\n    │   └─── file3.txt\n    └─── file1.txt\n"
+    equal(
+      tree,
+      "└──📂 root\n   ├──📂 dir1\n   │   └── file2.txt\n   ├──📂 dir2\n   │   ├──📁 dir3\n   │   └── file3.txt\n   └── file1.txt\n"
     );
   });
 
-  it("should return a tree with one file", () => {
+  test("should return a tree with one file", () => {
     const node: IFileTreeNode = {
       name: "root",
       isDirectory: true,
@@ -135,6 +138,6 @@ describe("buildTree", () => {
 
     const tree = buildTree(new FileTreeNode(node));
 
-    expect(tree).toBe("└───📂 root\n    └─── file1.txt\n");
+    equal(tree, "└──📂 root\n   └── file1.txt\n");
   });
 });
