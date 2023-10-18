@@ -20,10 +20,7 @@ export function buildTree(node: FileTreeNode): string {
  * @param previousTree The string representation of the previous tree level.
  * @returns A string representation of the file tree structure.
  */
-function buildFileTree(
-  node: FileTreeNode,
-  config: PathologicalConfiguration,
-  previousTree: string = ""): string {
+function buildFileTree(node: FileTreeNode, config: PathologicalConfiguration, previousTree: string = ""): string {
   const { verticalLine, indent } = config;
 
   let result = "";

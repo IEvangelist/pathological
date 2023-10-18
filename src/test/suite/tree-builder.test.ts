@@ -36,10 +36,7 @@ suite("buildTree", () => {
 
     const tree = buildTree(new FileTreeNode(node));
 
-    const lines = [
-      "└───📂 root",
-      "    └─── file1.txt"
-    ];
+    const lines = ["└───📂 root", "    └─── file1.txt"];
 
     const expected = lines.join("\n") + "\n";
     equal(tree, expected);
@@ -64,10 +61,7 @@ suite("buildTree", () => {
 
     const tree = buildTree(new FileTreeNode(node));
 
-    const lines = [
-      "└───📂 root",
-      "    └───📁 dir1"
-    ]
+    const lines = ["└───📂 root", "    └───📁 dir1"];
 
     const expected = lines.join("\n") + "\n";
     equal(tree, expected);
@@ -134,7 +128,7 @@ suite("buildTree", () => {
       "    │   ├───📁 dir3",
       "    │   └─── file3.txt",
       "    └─── file1.txt"
-    ]
+    ];
 
     const expected = lines.join("\n") + "\n";
     equal(tree, expected);
@@ -158,10 +152,7 @@ suite("buildTree", () => {
 
     const tree = buildTree(new FileTreeNode(node));
 
-    const lines = [
-      "└───📂 root",
-      "    └─── file1.txt"
-    ];
+    const lines = ["└───📂 root", "    └─── file1.txt"];
 
     const expected = lines.join("\n") + "\n";
     equal(tree, expected);
