@@ -71,7 +71,7 @@ export class FileTreeNode implements IFileTreeNode {
    * @returns {boolean} True if this node is a leaf node, false otherwise.
    */
   get isLeaf(): boolean {
-    return !!this._children && this._children.length > 0;
+    return (this._children?.length ?? 0) === 0;
   }
 
   /**
@@ -87,14 +87,6 @@ export class FileTreeNode implements IFileTreeNode {
    */
   get isRoot(): boolean {
     return this._depth === 0;
-  }
-
-  /**
-   * Returns a boolean indicating whether this node is a leaf and has at least one child.
-   * @returns {boolean} True if this node is a leaf and has at least one child, false otherwise.
-   */
-  get isLeafNotEmpty(): boolean {
-    return this.isLeaf && (this._children?.length ?? 0) === 0;
   }
 
   /**

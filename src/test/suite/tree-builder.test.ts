@@ -15,7 +15,7 @@ suite("buildTree", () => {
 
     const tree = buildTree(new FileTreeNode(node));
 
-    equal(tree, "└──📁 root\n");
+    equal(tree, "└───📁 root\n");
   });
 
   test("should return a tree with one file", () => {
@@ -36,7 +36,13 @@ suite("buildTree", () => {
 
     const tree = buildTree(new FileTreeNode(node));
 
-    equal(tree, "└──📂 root\n   └── file1.txt\n");
+    const lines = [
+      "└───📂 root",
+      "    └─── file1.txt"
+    ];
+
+    const expected = lines.join("\n") + "\n";
+    equal(tree, expected);
   });
 
   test("should return a tree with one directory", () => {
@@ -58,7 +64,13 @@ suite("buildTree", () => {
 
     const tree = buildTree(new FileTreeNode(node));
 
-    equal(tree, "└──📂 root\n   └──📁 dir1\n");
+    const lines = [
+      "└───📂 root",
+      "    └───📁 dir1"
+    ]
+
+    const expected = lines.join("\n") + "\n";
+    equal(tree, expected);
   });
 
   test("should return a tree with multiple files and directories", () => {
@@ -114,10 +126,18 @@ suite("buildTree", () => {
 
     const tree = buildTree(new FileTreeNode(node));
 
-    equal(
-      tree,
-      "└──📂 root\n   ├──📂 dir1\n   │   └── file2.txt\n   ├──📂 dir2\n   │   ├──📁 dir3\n   │   └── file3.txt\n   └── file1.txt\n"
-    );
+    const lines = [
+      "└───📂 root",
+      "    ├───📂 dir1",
+      "    │   └─── file2.txt",
+      "    ├───📂 dir2",
+      "    │   ├───📁 dir3",
+      "    │   └─── file3.txt",
+      "    └─── file1.txt"
+    ]
+
+    const expected = lines.join("\n") + "\n";
+    equal(tree, expected);
   });
 
   test("should return a tree with one file", () => {
@@ -138,6 +158,12 @@ suite("buildTree", () => {
 
     const tree = buildTree(new FileTreeNode(node));
 
-    equal(tree, "└──📂 root\n   └── file1.txt\n");
+    const lines = [
+      "└───📂 root",
+      "    └─── file1.txt"
+    ];
+
+    const expected = lines.join("\n") + "\n";
+    equal(tree, expected);
   });
 });

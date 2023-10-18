@@ -20,26 +20,25 @@ export function buildTree(node: FileTreeNode): string {
  * @param previousTree The string representation of the previous tree level.
  * @returns A string representation of the file tree structure.
  */
-function buildFileTree(node: FileTreeNode, config: PathologicalConfiguration, previousTree: string = ""): string {
-  const { verticalLine } = config;
-
-  if (node.isLeafNotEmpty) {
-    return toLeadingCornerLine(previousTree, config);
-  }
+function buildFileTree(
+  node: FileTreeNode,
+  config: PathologicalConfiguration,
+  previousTree: string = ""): string {
+  const { verticalLine, indent } = config;
 
   let result = "";
 
   if (node.isRoot) {
-    result += toSingleLine(true, previousTree, node.name, true, config);
-    previousTree += toLeadingLine(true, verticalLine);
+    result += toSingleLine(true, previousTree, node.name, true, config, node.isLeaf);
+    previousTree += toLeadingLine(true, verticalLine, indent);
   }
 
   node.children?.forEach((child, index) => {
     const isLastChild = index === node.children!.length - 1;
 
     if (child.isDirectory) {
-      result += toSingleLine(isLastChild, previousTree, child.name, true, config);
-      const previousSubtree = `${previousTree}${toLeadingLine(isLastChild, verticalLine)}`;
+      result += toSingleLine(isLastChild, previousTree, child.name, true, config, child.isLeaf);
+      const previousSubtree = `${previousTree}${toLeadingLine(isLastChild, verticalLine, indent)}`;
       result += buildFileTree(child, config, previousSubtree);
     }
 
@@ -52,25 +51,14 @@ function buildFileTree(node: FileTreeNode, config: PathologicalConfiguration, pr
 }
 
 /**
- * Returns a string representing the leading line of a folder tree node, including the corner, horizontal line, and open folder icon.
- * @param previousContent - The content that comes before the leading line.
- * @param config - The configuration object containing the corner, horizontal line, indent, and open folder icon.
- * @returns A string representing the leading line of a folder tree node.
- */
-function toLeadingCornerLine(previousContent = "", config: PathologicalConfiguration) {
-  const { corner, horizontalLine, indent, openFolder } = config;
-
-  return `${previousContent}${corner}${horizontalLine.repeat(indent - 1)}${openFolder}\n`;
-}
-
-/**
  * Returns a string representing the leading line of a tree node.
  * @param isLast - A boolean indicating whether the node is the last child of its parent.
  * @param verticalLine - A string representing the vertical line character used in the tree.
+ * @param indent - The number of spaces to indent the node.
  * @returns A string representing the leading line of a tree node.
  */
-function toLeadingLine(isLast: boolean, verticalLine: string): string {
-  return `${isLast ? " " : verticalLine}${" ".repeat(3)}`;
+function toLeadingLine(isLast: boolean, verticalLine: string, indent: number): string {
+  return `${isLast ? " " : verticalLine}${" ".repeat(indent - 1)}`;
 }
 
 /**
@@ -80,6 +68,7 @@ function toLeadingLine(isLast: boolean, verticalLine: string): string {
  * @param itemName - The name of the directory item.
  * @param isDirectory - Indicates whether the item is a directory.
  * @param config - The configuration object for the tree builder.
+ * @param isLeaf - Indicates whether the node is a leaf (has no children).
  * @returns A string representing the directory item in a single line.
  */
 function toSingleLine(
@@ -87,15 +76,16 @@ function toSingleLine(
   previousContent = "",
   itemName = "",
   isDirectory = false,
-  config: PathologicalConfiguration
+  config: PathologicalConfiguration,
+  isLeaf: boolean = false
 ) {
   const { openFolder, closedFolder, horizontalLine, junction, corner, indent } = config;
 
   const linePrefix = isLast ? corner : junction;
-  const folder = isDirectory && isLast ? closedFolder : openFolder;
+  const folder = isLeaf ? closedFolder : openFolder;
   const itemText = isDirectory ? `${folder} ${itemName}` : ` ${itemName}`;
 
-  const directoryItemRepresentation = `${linePrefix}${horizontalLine.repeat(indent - 2)}${itemText}`;
+  const directoryItemRepresentation = `${linePrefix}${horizontalLine.repeat(indent - 1)}${itemText}`;
 
   return `${previousContent}${directoryItemRepresentation}\n`;
 }
