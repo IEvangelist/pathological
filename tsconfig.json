@@ -11,6 +11,8 @@
 		"strict": true,
 		"moduleResolution": "node",
 		"outDir": "out",
-		"resolveJsonModule": true
+		"resolveJsonModule": true,
+		"noImplicitReturns": true,
+		"noUnusedParameters": true
 	}
 }

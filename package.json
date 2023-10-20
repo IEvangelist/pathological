@@ -98,6 +98,7 @@
   "scripts": {
     "clean": "rimraf ./dist ./out",
     "vscode:prepublish": "npm run compile",
+    "build": "npm run compile",
     "compile": "tsc -p ./",
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",

@@ -12,10 +12,15 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@8530928916aaef40f59e6f221989ccb31f5759e7
-      - uses: actions/setup-node@2a017f350dbf6c4b6bb4508cc83809719115162e
+      - name: Checkout
+        uses: actions/checkout@8530928916aaef40f59e6f221989ccb31f5759e7
+      - name: Install Node.js
+        uses: actions/setup-node@2a017f350dbf6c4b6bb4508cc83809719115162e
         with:
           node-version: 18.x
           cache: "npm"
@@ -27,3 +32,6 @@ jobs:
       - run: npm run lint
       - run: npm run compile
       - run: xvfb-run -a npm run test
+        if: runner.os == 'Linux'
+      - run: npm run test
+        if: runner.os != 'Linux'
