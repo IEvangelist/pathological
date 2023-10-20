@@ -105,7 +105,8 @@
     "format-check": "prettier --check \"**/*.ts\"",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "deploy": "vsce publish"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
@@ -125,7 +126,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.3",
     "rimraf": "^3.0.2",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "vsce": "^2.15.0"
   },
   "dependencies": {
     "@vscode/vsce": "^2.21.1"
