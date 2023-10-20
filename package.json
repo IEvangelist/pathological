@@ -116,6 +116,7 @@
     "@typescript-eslint/parser": "^6.7.2",
     "@vscode/test-electron": "^2.3.0",
     "@types/mocha": "^10.0.2",
+    "@vscode/vsce": "^2.21.1",
     "mocha": "^10.2.0",
     "glob": "^8.1.0",
     "eslint": "^8.49.0",
@@ -126,11 +127,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.3",
     "rimraf": "^3.0.2",
-    "cross-env": "^7.0.3",
-    "vsce": "^2.15.0"
-  },
-  "dependencies": {
-    "@vscode/vsce": "^2.21.1"
+    "cross-env": "^7.0.3"
   },
   "sponsor": {
     "url": "https://github.com/sponsors/IEvangelist"
