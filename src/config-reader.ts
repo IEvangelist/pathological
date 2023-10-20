@@ -1,4 +1,4 @@
-import * as vscode from "vscode";
+import { workspace } from "vscode";
 import { PathologicalConfiguration } from "./types/pathological-configuration";
 
 /**
@@ -6,7 +6,7 @@ import { PathologicalConfiguration } from "./types/pathological-configuration";
  * @returns The configuration object containing the closed and open folder icons.
  */
 export function getConfiguration(): PathologicalConfiguration {
-  const config = vscode.workspace.getConfiguration();
+  const config = workspace.getConfiguration();
 
   const closedFolder = config.get("pathological.closedFolder", "📁");
   const openFolder = config.get("pathological.openFolder", "📂");

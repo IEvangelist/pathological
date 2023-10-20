@@ -1,8 +1,8 @@
 import { basename, dirname, normalize, relative } from "path";
-import { Uri } from "vscode";
 import { buildTree } from "../tree-builder";
 import { generateFileSystemTree } from "../file-node-resolver";
 import { getConfiguration } from "../config-reader";
+import { Uri } from "vscode";
 
 /**
  * Returns the relative path between two Uri objects.
@@ -41,7 +41,8 @@ export function getRelativePath(firstUri: Uri, secondUri: Uri): string | null {
  */
 export function getAsFileSystemTree(uri: Uri): string {
   const fileSystemTree = generateFileSystemTree(uri.fsPath);
-  const tree = buildTree(fileSystemTree);
+  const config = getConfiguration();
+  const tree = buildTree(fileSystemTree, config);
 
   return tree;
 }

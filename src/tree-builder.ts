@@ -1,15 +1,13 @@
-import { getConfiguration } from "./config-reader";
 import { FileTreeNode } from "./types/file-tree-node";
 import { PathologicalConfiguration } from "./types/pathological-configuration";
 
 /**
  * Builds a file tree from the given root node.
  * @param node The root node of the file tree.
+ * @param config The configuration object for the file tree.
  * @returns A string representation of the file tree.
  */
-export function buildTree(node: FileTreeNode): string {
-  const config = getConfiguration();
-
+export function buildTree(node: FileTreeNode, config: PathologicalConfiguration): string {
   return buildFileTree(node, config);
 }
 
@@ -55,7 +53,7 @@ function buildFileTree(node: FileTreeNode, config: PathologicalConfiguration, pr
  * @returns A string representing the leading line of a tree node.
  */
 function toLeadingLine(isLast: boolean, verticalLine: string, indent: number): string {
-  return `${isLast ? " " : verticalLine}${" ".repeat(indent - 1)}`;
+  return `${isLast ? " " : verticalLine}${" ".repeat(indent)}`;
 }
 
 /**
