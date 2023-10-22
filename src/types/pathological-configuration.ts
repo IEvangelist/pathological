@@ -46,7 +46,7 @@ export interface PathologicalConfiguration {
 
   /**
    * Whether to normalize the path.
-   * @default false
+   * @default undefined
    */
-  normalizePath: boolean;
+  normalizedPathSeparator?: string;
 }

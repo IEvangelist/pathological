@@ -87,10 +87,9 @@
           "description": "The number of spaces to indent when rendering as a file-system tree.",
           "default": 4
         },
-        "pathological.normalizePath": {
-          "type": "boolean",
-          "description": "Whether or not to normalize the path when copying relative path.",
-          "default": false
+        "pathological.normalizedPathSeparator": {
+          "type": "string",
+          "description": "Represents the path separator to use when copying relative paths. If not provided, uses the system default."
         }
       }
     }

@@ -1,4 +1,4 @@
-import { basename, dirname, normalize, relative } from "path";
+import { basename, dirname, relative } from "path";
 import { buildTree } from "../tree-builder";
 import { generateFileSystemTree } from "../file-node-resolver";
 import { getConfiguration } from "../config-reader";
@@ -28,7 +28,10 @@ export function getRelativePath(firstUri: Uri, secondUri: Uri): string | null {
 
     const config = getConfiguration();
 
-    return config.normalizePath ? normalize(relativePath) : relativePath;
+    // If the normalizedPathSeparator option is set, use it to replace the path separator.
+    return config.normalizedPathSeparator
+      ? relativePath.replace(/[\\\/]/g, config.normalizedPathSeparator)
+      : relativePath;
   } catch (error) {
     return null;
   }

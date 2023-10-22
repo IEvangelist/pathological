@@ -13,7 +13,7 @@ suite("buildTree", () => {
     horizontalLine: "─",
     junction: "├",
     corner: "└",
-    normalizePath: false
+    normalizedPathSeparator: "/"
   };
 
   const laughableConfig: PathologicalConfiguration = {
@@ -24,7 +24,7 @@ suite("buildTree", () => {
     horizontalLine: "→",
     junction: "+",
     corner: "⁘",
-    normalizePath: false
+    normalizedPathSeparator: "/"
   };
 
   test("should return closed folder for single / empty directory", () => {
