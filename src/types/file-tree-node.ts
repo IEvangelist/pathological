@@ -8,6 +8,11 @@ export interface IFileTreeNode {
   name: string;
 
   /**
+   * The full path of the node.
+   */
+  fullPath?: string;
+
+  /**
    * Whether the node is a directory.
    */
   isDirectory: boolean;
@@ -33,6 +38,7 @@ export interface IFileTreeNode {
  */
 export class FileTreeNode implements IFileTreeNode {
   private _name: string;
+  private _fullPath: string;
   private _isDirectory: boolean;
   private _isFile: boolean;
   private _depth: number;
@@ -43,6 +49,13 @@ export class FileTreeNode implements IFileTreeNode {
    */
   get name(): string {
     return this._name;
+  }
+
+  /**
+   * The full path of the file or directory represented by this node.
+   */
+  get fullPath(): string {
+    return this._fullPath;
   }
 
   /**
@@ -95,6 +108,7 @@ export class FileTreeNode implements IFileTreeNode {
    */
   constructor(node: IFileTreeNode) {
     this._name = node.name;
+    this._fullPath = node.fullPath ?? "";
     this._isDirectory = node.isDirectory;
     this._isFile = node.isFile;
     this._depth = node.depth;

@@ -11,8 +11,12 @@ export function generateFileSystemTree(folderPath: string, depth: number = 0): F
   const stats = statSync(folderPath);
   const nodeName = basename(folderPath);
 
+  // get the fully qualified path of the file or directory
+  const fullPath = join(folderPath, nodeName);
+
   const node: IFileTreeNode = {
     name: nodeName,
+    fullPath: fullPath,
     isDirectory: stats.isDirectory(),
     isFile: stats.isFile(),
     depth: depth

@@ -4,6 +4,9 @@ import { generateFileSystemTree } from "../file-node-resolver";
 import { getConfiguration } from "../config-reader";
 import { Uri } from "vscode";
 
+// TODO:
+// Add showFileSystemStats.
+
 /**
  * Returns the relative path between two Uri objects.
  * @param firstUri The first Uri object.
@@ -48,4 +51,36 @@ export function getAsFileSystemTree(uri: Uri): string {
   const tree = buildTree(fileSystemTree, config);
 
   return tree;
+}
+
+/**
+ * Returns a file system as a flat list string for the given URI.
+ * @param uri - The URI to generate the file system tree for.
+ * @returns The file system as a flat list string.
+ */
+export function getAsFlatList(uri: Uri): string {
+  const fileSystemTree = generateFileSystemTree(uri.fsPath);
+
+  const flatList = [];
+  const stack = [fileSystemTree];
+  while (stack.length > 0) {
+    const node = stack.pop();
+    if (!node) {
+      continue;
+    }
+
+    flatList.push(node);
+    if (node.children) {
+      stack.push(...node.children);
+    }
+  }
+
+  const sorted = flatList?.sort((nodeA, nodeB) => {
+    if (nodeA.isDirectory === nodeB.isDirectory) {
+      return nodeA.fullPath.localeCompare(nodeB.fullPath);
+    }
+    return nodeA.isDirectory ? -1 : 1;
+  });
+
+  return sorted.map(n => n.fullPath).join("\n");
 }
