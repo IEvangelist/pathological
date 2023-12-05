@@ -40,6 +40,11 @@ export interface IFileTreeNode {
   size: number;
 
   /**
+   * The number of lines in the file represented by this node.
+   */
+  lineCount?: number;
+
+  /**
    * The extension of the file represented by this node.
    */
   extension?: string;
@@ -61,6 +66,7 @@ export class FileTreeNode implements IFileTreeNode {
   private _depth: number;
   private _children?: FileTreeNode[] | undefined;
   private _size: number;
+  private _lineCount?: number;
   private _extension?: string;
   private _fileKind: FileKind;
 
@@ -134,6 +140,13 @@ export class FileTreeNode implements IFileTreeNode {
   }
 
   /**
+   * The number of lines in the file represented by this node.
+   */
+  get lineCount(): number | undefined {
+    return this._lineCount;
+  }
+
+  /**
    * The extension of the file represented by this node.
    */
   get extension(): string | undefined {
@@ -158,8 +171,10 @@ export class FileTreeNode implements IFileTreeNode {
     this._isFile = node.isFile;
     this._depth = node.depth;
     this._size = node.size;
+    this._lineCount = node.lineCount;
     this._extension = node.extension;
     this._fileKind = node.fileKind;
+
     this._children = node.children
       ?.map(child => new FileTreeNode(child))
       ?.sort((nodeA, nodeB) => {

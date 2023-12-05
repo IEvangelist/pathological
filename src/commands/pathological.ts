@@ -1,7 +1,7 @@
 import { basename, dirname, relative } from "path";
-import { buildTree } from "../tree-builder";
-import { generateFileSystemTree } from "../file-node-resolver";
-import { getConfiguration } from "../config-reader";
+import { buildTree } from "../services/tree-builder";
+import { generateFileSystemTree } from "../services/file-node-resolver";
+import { getConfiguration } from "../services/config-reader";
 import { Uri } from "vscode";
 
 // TODO:

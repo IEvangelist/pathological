@@ -1,6 +1,6 @@
 import { equal } from "assert";
 import { suite, test } from "mocha";
-import { buildTree } from "../../tree-builder";
+import { buildTree } from "../../services/tree-builder";
 import { IFileTreeNode, FileTreeNode } from "../../types/file-tree-node";
 import { PathologicalConfiguration } from "../../types/pathological-configuration";
 import { FileKind } from "../../types/file-kind";

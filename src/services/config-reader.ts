@@ -1,5 +1,5 @@
 import { workspace } from "vscode";
-import { PathologicalConfiguration } from "./types/pathological-configuration";
+import { PathologicalConfiguration } from "../types/pathological-configuration";
 
 /**
  * Retrieves the configuration for the Pathological extension.

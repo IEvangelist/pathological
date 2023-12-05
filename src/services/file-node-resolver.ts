@@ -1,7 +1,8 @@
 import { basename, extname, join } from "path";
 import { readdirSync, statSync } from "fs";
-import { IFileTreeNode, FileTreeNode } from "./types/file-tree-node";
-import { FileKind } from "./types/file-kind";
+import { IFileTreeNode, FileTreeNode } from "../types/file-tree-node";
+import { FileKind } from "../types/file-kind";
+import { tryCountLines } from "./file-line-counter";
 
 /**
  * Recursively generates a tree of file system nodes for the given folder path.
@@ -12,9 +13,8 @@ export function generateFileSystemTree(folderPath: string, depth: number = 0): F
   const stats = statSync(folderPath);
   const nodeName = basename(folderPath);
   const extension = extname(nodeName);
-
-  // get the fully qualified path of the file or directory
   const fullPath = join(folderPath, nodeName);
+  const lineCount = tryCountLines(fullPath);
 
   const node: IFileTreeNode = {
     name: nodeName,
@@ -23,6 +23,7 @@ export function generateFileSystemTree(folderPath: string, depth: number = 0): F
     isFile: stats.isFile(),
     depth: depth,
     size: stats.size,
+    lineCount: lineCount,
     extension: extension,
     fileKind: mapKindFrom(extension)
   };

@@ -1,5 +1,5 @@
-import { FileTreeNode } from "./types/file-tree-node";
-import { PathologicalConfiguration } from "./types/pathological-configuration";
+import { FileTreeNode } from "../types/file-tree-node";
+import { PathologicalConfiguration } from "../types/pathological-configuration";
 
 /**
  * Builds a file tree from the given root node.
