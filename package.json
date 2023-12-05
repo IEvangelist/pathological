@@ -34,7 +34,11 @@
         "command": "pathological.getAsFlatList",
         "title": "Copy as Flat List",
         "shortTitle": "As Flat List"
-      }
+      },
+      {
+        "command": "pathological.getAsFileSystemStats",
+        "title": "Copy as File System Stats",
+        "shortTitle": "As Stats"}
     ],
     "menus": {
       "explorer/context": [
@@ -55,6 +59,11 @@
         {
           "when": "explorerResourceIsFolder",
           "command": "pathological.getAsFlatList",
+          "group": "6_copypath"
+        },
+        {
+          "when": "explorerResourceIsFolder",
+          "command": "pathological.getAsFileSystemStats",
           "group": "6_copypath"
         }
       ]

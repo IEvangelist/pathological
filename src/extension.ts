@@ -1,5 +1,5 @@
 import { ExtensionContext, commands, Uri, window, env } from "vscode";
-import { getAsFileSystemTree, getAsFlatList, getRelativePath } from "./commands/pathological";
+import { getAsFileSystemStats, getAsFileSystemTree, getAsFlatList, getRelativePath } from "./commands/pathological";
 
 /**
  * The URI of the currently selected item, if any.
@@ -27,6 +27,17 @@ export function activate(context: ExtensionContext) {
       if (uri && uri.scheme === "file") {
         await setSelectedUri(uri);
       }
+    }
+  );
+
+  const getFileSystemStatsDisposable = commands.registerCommand(
+    "pathological.getAsFileSystemStats",
+    async (uri: Uri) => {
+      const stats = getAsFileSystemStats(uri);
+
+      await env.clipboard.writeText(stats);
+
+      await window.showInformationMessage(stats);
     }
   );
 
@@ -73,6 +84,7 @@ export function activate(context: ExtensionContext) {
   context.subscriptions.push(getRelativePathDisposable);
   context.subscriptions.push(getFileSystemTreeDisposable);
   context.subscriptions.push(getFileSystemFlatListDisposable);
+  context.subscriptions.push(getFileSystemStatsDisposable);
 
   console.log("Pathological extension activated.");
 }

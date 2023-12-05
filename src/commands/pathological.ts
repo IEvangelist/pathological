@@ -3,6 +3,7 @@ import { buildTree } from "../services/tree-builder";
 import { generateFileSystemTree } from "../services/file-node-resolver";
 import { getConfiguration } from "../services/config-reader";
 import { Uri } from "vscode";
+import { toHumanReadableSize } from "../services/size-humanizer";
 
 // TODO:
 // Add showFileSystemStats.
@@ -116,7 +117,8 @@ export function getAsFileSystemStats(uri: Uri): string {
   const stats = {
     directories: 0,
     files: 0,
-    size: 0
+    size: 0,
+    sizeWithUnits: ""
   };
 
   const stack = [fileSystemTree];
@@ -138,5 +140,8 @@ export function getAsFileSystemStats(uri: Uri): string {
     }
   }
 
-  return JSON.stringify(stats, null, 2);
+  stats.sizeWithUnits = toHumanReadableSize(stats.size);
+
+  const json = JSON.stringify(stats, null, 2);
+  return json;
 }
