@@ -59,7 +59,7 @@ export function getRelativePath(firstUri: Uri, secondUri: Uri): string | null {
 
     // If the normalizedPathSeparator option is set, use it to replace the path separator.
     return config.normalizedPathSeparator
-      ? relativePath.replace(/[\\\/]/g, config.normalizedPathSeparator)
+      ? relativePath.replace(/[\\/]/g, config.normalizedPathSeparator)
       : relativePath;
   } catch (error) {
     return null;
@@ -118,7 +118,8 @@ export function getAsFileSystemStats(uri: Uri): string {
     directories: 0,
     files: 0,
     size: 0,
-    sizeWithUnits: ""
+    sizeWithUnits: "",
+    lineCount: 0
   };
 
   const stack = [fileSystemTree];
@@ -133,6 +134,9 @@ export function getAsFileSystemStats(uri: Uri): string {
     } else {
       stats.files++;
       stats.size += node.size;
+      if (node.lineCount !== undefined) {
+        stats.lineCount += node.lineCount;
+      }
     }
 
     if (node.children) {

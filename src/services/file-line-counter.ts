@@ -17,7 +17,7 @@ export function tryCountLines(filePath: string): number {
     });
 
     // Increment the line count on each line read
-    rl.on("line", _ => ++linesCount);
+    rl.on("line", () => ++linesCount);
 
     // Print the total line count when the 'close' event is triggered
     rl.on("close", () => console.log(linesCount));
