@@ -3,6 +3,7 @@ import { suite, test } from "mocha";
 import { buildTree } from "../../tree-builder";
 import { IFileTreeNode, FileTreeNode } from "../../types/file-tree-node";
 import { PathologicalConfiguration } from "../../types/pathological-configuration";
+import { FileKind } from "../../types/file-kind";
 
 suite("buildTree", () => {
   const config: PathologicalConfiguration = {
@@ -33,6 +34,9 @@ suite("buildTree", () => {
       isDirectory: true,
       isFile: false,
       depth: 0,
+      size: 0,
+      extension: undefined,
+      fileKind: FileKind.NotApplicable,
       children: []
     };
 
@@ -47,12 +51,18 @@ suite("buildTree", () => {
       isDirectory: true,
       isFile: false,
       depth: 0,
+      size: 10,
+      extension: undefined,
+      fileKind: FileKind.NotApplicable,
       children: [
         {
           name: "file1.txt",
           isDirectory: false,
           isFile: true,
-          depth: 1
+          depth: 1,
+          size: 10,
+          extension: ".txt",
+          fileKind: FileKind.Text
         }
       ]
     };
@@ -71,12 +81,18 @@ suite("buildTree", () => {
       isDirectory: true,
       isFile: false,
       depth: 0,
+      size: 0,
+      extension: undefined,
+      fileKind: FileKind.NotApplicable,
       children: [
         {
           name: "dir1",
           isDirectory: true,
           isFile: false,
           depth: 1,
+          size: 0,
+          extension: undefined,
+          fileKind: FileKind.NotApplicable,
           children: []
         }
       ]
@@ -96,24 +112,36 @@ suite("buildTree", () => {
       isDirectory: true,
       isFile: false,
       depth: 0,
+      size: 100,
+      extension: undefined,
+      fileKind: FileKind.NotApplicable,
       children: [
         {
           name: "file1.txt",
           isDirectory: false,
           isFile: true,
-          depth: 1
+          depth: 1,
+          size: 30,
+          extension: ".txt",
+          fileKind: FileKind.Text
         },
         {
           name: "dir1",
           isDirectory: true,
           isFile: false,
           depth: 1,
+          size: 20,
+          extension: undefined,
+          fileKind: FileKind.NotApplicable,
           children: [
             {
               name: "file2.txt",
               isDirectory: false,
               isFile: true,
-              depth: 2
+              depth: 2,
+              size: 20,
+              extension: ".txt",
+              fileKind: FileKind.Text
             }
           ]
         },
@@ -122,18 +150,27 @@ suite("buildTree", () => {
           isDirectory: true,
           isFile: false,
           depth: 1,
+          size: 50,
+          extension: undefined,
+          fileKind: FileKind.NotApplicable,
           children: [
             {
               name: "file3.txt",
               isDirectory: false,
               isFile: true,
-              depth: 2
+              depth: 2,
+              size: 50,
+              extension: ".txt",
+              fileKind: FileKind.Text
             },
             {
               name: "dir3",
               isDirectory: true,
               isFile: false,
               depth: 2,
+              size: 0,
+              extension: undefined,
+              fileKind: FileKind.NotApplicable,
               children: []
             }
           ]
@@ -163,24 +200,36 @@ suite("buildTree", () => {
       isDirectory: true,
       isFile: false,
       depth: 0,
+      size: 100,
+      extension: undefined,
+      fileKind: FileKind.NotApplicable,
       children: [
         {
           name: "file1.txt",
           isDirectory: false,
           isFile: true,
-          depth: 1
+          depth: 1,
+          size: 30,
+          extension: ".txt",
+          fileKind: FileKind.Text
         },
         {
           name: "dir1",
           isDirectory: true,
           isFile: false,
           depth: 1,
+          size: 20,
+          extension: undefined,
+          fileKind: FileKind.NotApplicable,
           children: [
             {
               name: "file2.txt",
               isDirectory: false,
               isFile: true,
-              depth: 2
+              depth: 2,
+              size: 20,
+              extension: ".txt",
+              fileKind: FileKind.Text
             }
           ]
         },
@@ -189,18 +238,27 @@ suite("buildTree", () => {
           isDirectory: true,
           isFile: false,
           depth: 1,
+          size: 50,
+          extension: undefined,
+          fileKind: FileKind.NotApplicable,
           children: [
             {
               name: "file3.txt",
               isDirectory: false,
               isFile: true,
-              depth: 2
+              depth: 2,
+              size: 50,
+              extension: ".txt",
+              fileKind: FileKind.Text
             },
             {
               name: "dir3",
               isDirectory: true,
               isFile: false,
               depth: 2,
+              size: 0,
+              extension: undefined,
+              fileKind: FileKind.NotApplicable,
               children: []
             }
           ]

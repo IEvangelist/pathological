@@ -7,6 +7,31 @@ import { Uri } from "vscode";
 // TODO:
 // Add showFileSystemStats.
 
+// /**
+//  * Show a webview of all the file stats for the given URI.
+//  * @param uri - The URI to generate the file or aggregated directory stats for.
+//  */
+// export function showPathological(uri: Uri): void {
+//   const config = getConfiguration();
+
+//   const fileSystemTree = generateFileSystemTree(uri.fsPath);
+//   const tree = buildTree(fileSystemTree, config);
+
+//   const panel = config.createPanel("Pathological", "pathological", tree);
+//   panel.webview.onDidReceiveMessage(
+//     (message) => {
+//       switch (message.command) {
+//         case "openFile":
+//           const fileUri = Uri.file(message.path);
+//           config.openFile(fileUri);
+//           break;
+//       }
+//     },
+//     undefined,
+//     config.extensionContext.subscriptions
+//   );
+// }
+
 /**
  * Returns the relative path between two Uri objects.
  * @param firstUri The first Uri object.
@@ -83,4 +108,35 @@ export function getAsFlatList(uri: Uri): string {
   });
 
   return sorted.map(n => n.fullPath).join("\n");
+}
+
+export function getAsFileSystemStats(uri: Uri): string {
+  const fileSystemTree = generateFileSystemTree(uri.fsPath);
+
+  const stats = {
+    directories: 0,
+    files: 0,
+    size: 0
+  };
+
+  const stack = [fileSystemTree];
+  while (stack.length > 0) {
+    const node = stack.pop();
+    if (!node) {
+      continue;
+    }
+
+    if (node.isDirectory) {
+      stats.directories++;
+    } else {
+      stats.files++;
+      stats.size += node.size;
+    }
+
+    if (node.children) {
+      stack.push(...node.children);
+    }
+  }
+
+  return JSON.stringify(stats, null, 2);
 }

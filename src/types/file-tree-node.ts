@@ -1,3 +1,5 @@
+import { FileKind } from "./file-kind";
+
 /**
  * Represents a node in a file tree.
  */
@@ -30,7 +32,22 @@ export interface IFileTreeNode {
   /**
    * The children of the node.
    */
-  children?: IFileTreeNode[];
+  children?: IFileTreeNode[] | undefined;
+
+  /**
+   * The size of the node in bytes.
+   */
+  size: number;
+
+  /**
+   * The extension of the file represented by this node.
+   */
+  extension?: string;
+
+  /**
+   * The kind of file represented by this node.
+   */
+  fileKind: FileKind;
 }
 
 /**
@@ -42,7 +59,10 @@ export class FileTreeNode implements IFileTreeNode {
   private _isDirectory: boolean;
   private _isFile: boolean;
   private _depth: number;
-  private _children?: FileTreeNode[];
+  private _children?: FileTreeNode[] | undefined;
+  private _size: number;
+  private _extension?: string;
+  private _fileKind: FileKind;
 
   /**
    * The name of the file or directory represented by this node.
@@ -103,6 +123,31 @@ export class FileTreeNode implements IFileTreeNode {
   }
 
   /**
+   * The size of the file or directory represented by this node in bytes.
+   */
+  get size(): number {
+    if (this.isDirectory) {
+      return this._children?.reduce((total, child) => total + child.size, 0) ?? 0;
+    }
+
+    return this._size;
+  }
+
+  /**
+   * The extension of the file represented by this node.
+   */
+  get extension(): string | undefined {
+    return this._extension;
+  }
+
+  /**
+   * The kind of file represented by this node.
+   */
+  get fileKind(): FileKind {
+    return this._fileKind;
+  }
+
+  /**
    * Creates a new instance of the FileTreeNode class.
    * @param node The node to create the instance from.
    */
@@ -112,6 +157,9 @@ export class FileTreeNode implements IFileTreeNode {
     this._isDirectory = node.isDirectory;
     this._isFile = node.isFile;
     this._depth = node.depth;
+    this._size = node.size;
+    this._extension = node.extension;
+    this._fileKind = node.fileKind;
     this._children = node.children
       ?.map(child => new FileTreeNode(child))
       ?.sort((nodeA, nodeB) => {
