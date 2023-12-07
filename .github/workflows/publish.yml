@@ -91,6 +91,10 @@ jobs:
       - run: npm run package
       - run: |
           echo "EXT_PATH=$(find . -name vscode-github-actions-*.vsix)" >> $GITHUB_ENV
+          # if the path isn't found set it to the default
+          if [ -z "${EXT_PATH}" ]; then
+            echo "EXT_PATH=/home/runner/work/pathological/pathological/pathological-${EXT_VERSION}.vsix"  >> $GITHUB_ENV
+          fi
 
       - uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32
         with:
