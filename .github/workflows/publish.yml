@@ -60,9 +60,11 @@ jobs:
 
     env:
       EXT_VERSION: "" # will be set in the workflow
+      EXT_PATH: ""    # will be set in the workflow
 
     outputs:
       version: ${{ env.EXT_VERSION }}
+      path: ${{ env.EXT_PATH }}
 
     steps:
       - uses: actions/checkout@8530928916aaef40f59e6f221989ccb31f5759e7
@@ -79,22 +81,25 @@ jobs:
       - run: npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+
       - name: create a package.json that actions/upload will like 
         run: |
           cp package.json package.json.real
           sed --regexp-extended '/"name"\s*:/ s#@[a-zA-Z\\-]+/##' package.json.real > package.json
-          
+
+        # Get output path of extension
       - run: npm run package
+      - run: |
+          echo "EXT_PATH=$(find . -name vscode-github-actions-*.vsix)" >> $GITHUB_ENV
 
       - uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32
         with:
           name: vscode-github-actions-${{ env.EXT_VERSION }}.vsix
-          path: ./vscode-github-actions-${{ env.EXT_VERSION }}.vsix
+          path: ${{ env.EXT_PATH }}
 
       - name: restore old package.json
         run: mv package.json.real package.json
-      
+
       - name: Create release and upload release asset
         uses: actions/github-script@1f16022c7518aad314c43abcd029895291be0f52
         with:
@@ -110,7 +115,7 @@ jobs:
               prerelease: false
             });
 
-            const path = "./vscode-github-actions-${{ env.EXT_VERSION }}.vsix";
+            const path = ${{ env.EXT_PATH }};
             await github.rest.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
