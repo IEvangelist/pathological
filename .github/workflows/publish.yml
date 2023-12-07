@@ -148,13 +148,9 @@ jobs:
         with:
           name: vscode-github-actions-${{ needs.release.outputs.version }}.vsix
 
-      - name: Publish to marketplace
-        uses: HaaLeo/publish-vscode-extension@c1a0486c5a3eed24e8c21d4e37889a7c4c60c443
-        with:
-          pat: ${{ secrets.PUBLISHER_KEY }}
-          registryUrl: https://marketplace.visualstudio.com
-          # extensionFile: ./vscode-github-actions-${{ needs.release.outputs.version }}.vsix
-          packagePath: /home/runner/work/pathological/pathological/pathological-${{ needs.release.outputs.version }}.vsix
+      - run: npx vsce publish --packagePath $(find . -iname *.vsix)
+        env:
+          VSCE_PAT: ${{ secrets.PUBLISHER_KEY }}
 
   # open-vsx-publish:
   #   name: Publish to Open VSX Registry
