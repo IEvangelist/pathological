@@ -1,5 +1,4 @@
 .devcontainer
 .vscode
-out/
 tsconfig.json
 dist/*.map
