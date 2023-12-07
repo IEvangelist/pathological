@@ -1,6 +1,7 @@
 # Pathological
 
 [![Build](https://github.com/IEvangelist/pathological/actions/workflows/build.yml/badge.svg)](https://github.com/IEvangelist/pathological/actions/workflows/build.yml)
+[![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/IEvangelist.pathological?logo=visualstudiocode&label=Visual%20Studio%20Code%20Marketplace&color=blue)](https://marketplace.visualstudio.com/items?itemName=IEvangelist.pathological)
 
 Pathological is a VS Code extension that provides convenient and developer-friendly _path_ APIs. With Pathological, you can copy a selected directory in the **Explorer** as a tree representation with fully customizable control characters. You can also select relative paths between explorer selections.
 
