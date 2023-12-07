@@ -119,7 +119,7 @@ jobs:
               prerelease: false
             });
 
-            const path = ${{ env.EXT_PATH }};
+            const path = "${{ env.EXT_PATH }}" || "./vscode-github-actions-${{ env.EXT_VERSION }}.vsix;
             await github.rest.repos.uploadReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
