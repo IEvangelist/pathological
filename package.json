@@ -125,6 +125,8 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile",
     "test": "node ./out/test/runTest.js",
+    "package": "vsce package",
+    "publish": "npm run deploy",
     "deploy": "vsce publish"
   },
   "devDependencies": {
