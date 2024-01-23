@@ -44,7 +44,7 @@ export function activate(context: ExtensionContext) {
         DirectoryPanel.revive(webviewPanel, context.extensionUri, state);
 
         // await a noop promise.
-        await new Promise<void>((resolve) => {
+        await new Promise<void>(resolve => {
           resolve();
         });
       }
