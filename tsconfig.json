@@ -14,5 +14,9 @@
 		"resolveJsonModule": true,
 		"noImplicitReturns": true,
 		"noUnusedParameters": true
-	}
+	},
+	"exclude": [
+		"node_modules",
+		".vscode-test"
+	]
 }

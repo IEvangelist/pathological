@@ -1,5 +1,13 @@
-import { ExtensionContext, commands, Uri, window, env } from "vscode";
-import { getAsFileSystemStats, getAsFileSystemTree, getAsFlatList, getRelativePath } from "./commands/pathological";
+import { ExtensionContext, Disposable, commands, Uri, window, WebviewPanel, env } from "vscode";
+import {
+  getAsFileSystemStats,
+  getAsFileSystemTree,
+  getAsFlatList,
+  getRelativePath,
+  showPathological
+} from "./commands/pathological";
+import { DirectoryPanel } from "./panels/directory-panel";
+import { PathologicalStats } from "./types/pathological-stats";
 
 /**
  * The URI of the currently selected item, if any.
@@ -21,6 +29,23 @@ const setSelectedUri = async (uri: Uri | undefined) => {
  * @param context The extension context.
  */
 export function activate(context: ExtensionContext) {
+  const showPathologicalDisposable = commands.registerCommand("pathological.showPathological", (uri: Uri) => {
+    showPathological(context.extensionUri, uri);
+  });
+
+  let webViewPanelSerializerDisposable: Disposable | undefined = undefined;
+  if (window.registerWebviewPanelSerializer) {
+    // Make sure we register a serializer in activation event
+    webViewPanelSerializerDisposable = window.registerWebviewPanelSerializer(DirectoryPanel.viewType, {
+      async deserializeWebviewPanel(webviewPanel: WebviewPanel, state: PathologicalStats) {
+        console.log(`Got state: ${state}`);
+        // Reset the webview options so we use latest uri for `localResourceRoots`.
+        webviewPanel.webview.options = DirectoryPanel.getWebviewOptions(context.extensionUri);
+        DirectoryPanel.revive(webviewPanel, context.extensionUri, state);
+      }
+    });
+  }
+
   const selectUriForRelativeDisposable = commands.registerCommand(
     "pathological.selectUriForRelative",
     async (uri: Uri) => {
@@ -35,9 +60,11 @@ export function activate(context: ExtensionContext) {
     async (uri: Uri) => {
       const stats = getAsFileSystemStats(uri);
 
-      await env.clipboard.writeText(stats);
+      const json = JSON.stringify(stats, null, 2);
 
-      await window.showInformationMessage(stats);
+      await env.clipboard.writeText(json);
+
+      await window.showInformationMessage(json);
     }
   );
 
@@ -80,6 +107,10 @@ export function activate(context: ExtensionContext) {
     }
   });
 
+  context.subscriptions.push(showPathologicalDisposable);
+  if (webViewPanelSerializerDisposable) {
+    context.subscriptions.push(webViewPanelSerializerDisposable);
+  }
   context.subscriptions.push(selectUriForRelativeDisposable);
   context.subscriptions.push(getRelativePathDisposable);
   context.subscriptions.push(getFileSystemTreeDisposable);

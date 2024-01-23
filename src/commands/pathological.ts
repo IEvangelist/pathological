@@ -1,37 +1,22 @@
+import { Uri } from "vscode";
 import { basename, dirname, relative } from "path";
 import { buildTree } from "../services/tree-builder";
+import { DirectoryPanel } from "../panels/directory-panel";
 import { generateFileSystemTree } from "../services/file-node-resolver";
 import { getConfiguration } from "../services/config-reader";
-import { Uri } from "vscode";
+import { PathologicalStats } from "../types/pathological-stats";
 import { toHumanReadableSize } from "../services/size-humanizer";
-
-// TODO:
-// Add showFileSystemStats.
+import { FileTreeNode } from "../types/file-tree-node";
 
 // /**
 //  * Show a webview of all the file stats for the given URI.
 //  * @param uri - The URI to generate the file or aggregated directory stats for.
 //  */
-// export function showPathological(uri: Uri): void {
-//   const config = getConfiguration();
+export function showPathological(extensionUri: Uri, uri: Uri): void {
+  const stats = getAsFileSystemStats(uri);
 
-//   const fileSystemTree = generateFileSystemTree(uri.fsPath);
-//   const tree = buildTree(fileSystemTree, config);
-
-//   const panel = config.createPanel("Pathological", "pathological", tree);
-//   panel.webview.onDidReceiveMessage(
-//     (message) => {
-//       switch (message.command) {
-//         case "openFile":
-//           const fileUri = Uri.file(message.path);
-//           config.openFile(fileUri);
-//           break;
-//       }
-//     },
-//     undefined,
-//     config.extensionContext.subscriptions
-//   );
-// }
+  DirectoryPanel.createOrShow(extensionUri, uri, stats);
+}
 
 /**
  * Returns the relative path between two Uri objects.
@@ -73,6 +58,10 @@ export function getRelativePath(firstUri: Uri, secondUri: Uri): string | null {
  */
 export function getAsFileSystemTree(uri: Uri): string {
   const fileSystemTree = generateFileSystemTree(uri.fsPath);
+  return representAsFileSystemTree(fileSystemTree);
+}
+
+function representAsFileSystemTree(fileSystemTree: FileTreeNode) {
   const config = getConfiguration();
   const tree = buildTree(fileSystemTree, config);
 
@@ -111,15 +100,20 @@ export function getAsFlatList(uri: Uri): string {
   return sorted.map(n => n.fullPath).join("\n");
 }
 
-export function getAsFileSystemStats(uri: Uri): string {
+export function getAsFileSystemStats(uri: Uri): PathologicalStats {
   const fileSystemTree = generateFileSystemTree(uri.fsPath);
+  const treeContent = representAsFileSystemTree(fileSystemTree);
 
-  const stats = {
+  const stats: PathologicalStats = {
     directories: 0,
     files: 0,
     size: 0,
     sizeWithUnits: "",
-    lineCount: 0
+    lineCount: 0,
+    uniqueFileTypeCount: 0,
+    sourceUri: uri,
+    fileTreeNode: fileSystemTree,
+    preAsciiContent: treeContent
   };
 
   const stack = [fileSystemTree];
@@ -144,8 +138,12 @@ export function getAsFileSystemStats(uri: Uri): string {
     }
   }
 
+  const allChildren = fileSystemTree.allChildren;
+  const uniqueFileTypes = new Set(allChildren.map(n => n.extension));
+  stats.uniqueFileTypeCount = uniqueFileTypes.size;
+  stats.lineCount = allChildren.reduce((total, child) => total + (child.lineCount ?? 0), 0);
+  stats.directories = allChildren.filter(n => n.isDirectory).length;
   stats.sizeWithUnits = toHumanReadableSize(stats.size);
 
-  const json = JSON.stringify(stats, null, 2);
-  return json;
+  return stats;
 }

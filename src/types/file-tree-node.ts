@@ -161,6 +161,13 @@ export class FileTreeNode implements IFileTreeNode {
   }
 
   /**
+   * Gets all children of the current node, including children of children, recursively.
+   */
+  get allChildren(): FileTreeNode[] {
+    return [[this], ...(this._children ? this._children.map(child => child.allChildren) : [])].flat();
+  }
+
+  /**
    * Creates a new instance of the FileTreeNode class.
    * @param node The node to create the instance from.
    */

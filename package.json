@@ -19,6 +19,9 @@
   "categories": [
     "Other"
   ],
+  "activationEvents": [
+    "onWebviewPanel:pathological"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
@@ -45,7 +48,13 @@
       {
         "command": "pathological.getAsFileSystemStats",
         "title": "Copy as File System Stats",
-        "shortTitle": "As Stats"}
+        "shortTitle": "As Stats"
+      },
+      {
+        "command": "pathological.showPathological",
+        "title": "Show Pathological Stats",
+        "shortTitle": "Show Stats"
+      }
     ],
     "menus": {
       "explorer/context": [
@@ -71,6 +80,11 @@
         {
           "when": "explorerResourceIsFolder",
           "command": "pathological.getAsFileSystemStats",
+          "group": "6_copypath"
+        },
+        {
+          "when": "explorerResourceIsFolder",
+          "command": "pathological.showPathological",
           "group": "6_copypath"
         }
       ]
@@ -140,6 +154,7 @@
     "@types/glob": "^8.1.0",
     "@types/node": "^20.6.3",
     "@types/vscode": "^1.82.0",
+    "@types/vscode-webview": "^1.57.4",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "@typescript-eslint/parser": "^6.7.2",
     "@vscode/test-electron": "^2.3.0",
