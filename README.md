@@ -89,7 +89,7 @@ Pathological also provides a **`Pathological: Show Pathological Stats`** command
 
 ## ⚙️ Configuration
 
-<a id="config">
+<a id="config"></a>
 
 Pathological is fully configurable. You can change the control characters used to represent the tree, the indentation, and the file and folder icons. You can also change the default behavior of the **`Copy Relative Path`** command to copy the absolute path instead of the relative path.
 
