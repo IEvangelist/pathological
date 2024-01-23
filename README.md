@@ -28,6 +28,8 @@ would copy the following to your clipboard:
 ..\..\..\.github\workflows\publish-nuget.yml
 ```
 
+If you configure your 
+
 > [!NOTE]
 > This is following the **`Select for Compare`** and corresponding **`Compare with Selected`**.
 

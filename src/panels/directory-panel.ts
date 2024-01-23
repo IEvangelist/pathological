@@ -168,8 +168,8 @@ export class DirectoryPanel {
 
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-				<link href="${stylesResetUri}" rel="stylesheet">
-				<link href="${stylesMainUri}" rel="stylesheet">
+				<link href="${stylesResetUri.toString()}" rel="stylesheet">
+				<link href="${stylesMainUri.toString()}" rel="stylesheet">
 
 				<title>${statTypeIcon} — ${normalizedPath}</title>
 			</head>
@@ -189,7 +189,7 @@ export class DirectoryPanel {
 				<pre>${stats.preAsciiContent}</pre>
 				</div>
 
-				<script nonce="${nonce}" src="${scriptUri}"></script>
+				<script nonce="${nonce}" src="${scriptUri.toString()}"></script>
 			</body>
 			</html>`;
   }
