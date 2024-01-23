@@ -28,7 +28,13 @@ would copy the following to your clipboard:
 ..\..\..\.github\workflows\publish-nuget.yml
 ```
 
-If you configure your 
+If you configure your **Normalized Path Separator** to be `/` instead of `\`, the following would be copied to your clipboard:
+
+```
+../../../.github/workflows/publish-nuget.yml
+```
+
+For more information, see the [Configuration](#config) section.
 
 > [!NOTE]
 > This is following the **`Select for Compare`** and corresponding **`Compare with Selected`**.
@@ -69,7 +75,21 @@ The following is copied to your clipboard:
                 └─── Pathological.Globbing.pdb
 ```
 
+## 🔢 Stats
+
+Pathological also provides a **`Pathological: Show Pathological Stats`** command that will display the following information about the selected file or folder:
+
+- **`Path`**: The full path of the selected file or folder.
+- **`Files`**: The number of files in the selected folder.
+- **`Directories`**: The number of directories in the selected folder.
+- **`Total Size`**: The total size of the selected file or folder in a human-readable format.
+- **`Total Number Lines`**: The total number of lines in the selected file or folder.
+- **`Unique File Types`**: The total number of unique lines in the selected file or folder.
+- **`File Tree`**: The tree representation of the selected file or folder.
+
 ## ⚙️ Configuration
+
+<a id="config">
 
 Pathological is fully configurable. You can change the control characters used to represent the tree, the indentation, and the file and folder icons. You can also change the default behavior of the **`Copy Relative Path`** command to copy the absolute path instead of the relative path.
 
