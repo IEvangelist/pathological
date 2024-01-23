@@ -13,7 +13,7 @@ export function generateFileSystemTree(folderPath: string, depth: number = 0): F
   const stats = statSync(folderPath);
   const nodeName = basename(folderPath);
   const extension = extname(nodeName);
-  const fullPath = join(folderPath, nodeName);
+  const fullPath = join(folderPath, folderPath.endsWith(nodeName) ? "" : nodeName);
   const lineCount = tryCountLines(fullPath);
 
   const node: IFileTreeNode = {

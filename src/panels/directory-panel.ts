@@ -181,7 +181,7 @@ export class DirectoryPanel {
 					<p><span class="term">Directories</span> <span class="value">${stats.directories}</span></p>
 					<p><span class="term">Total Size</span> <span class="value">${stats.sizeWithUnits}</span></p>
 					<p><span class="term">Total Number Lines</span> <span class="value">${
-            stats.lineCount ? stats.lineCount : "Did not count..."
+            stats.lineCount ? stats.lineCount.toLocaleString() : "Did not count..."
           }</span></p>
 					<p><span class="term">Unique File Types</span> <span class="value">${stats.uniqueFileTypeCount}</span></p>
 				</div>

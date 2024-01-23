@@ -95,7 +95,7 @@ textarea::placeholder {
 }
 
 .stats {
-    font-size: 1rem;;
+    font-size: 1rem;
 }
 
 .stats .term {
@@ -111,4 +111,8 @@ textarea::placeholder {
 .stats .value {
     color: lightcyan;
     font-family: monospace;
+}
+
+pre {
+	line-height: 1rem;
 }
