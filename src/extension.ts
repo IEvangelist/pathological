@@ -38,10 +38,15 @@ export function activate(context: ExtensionContext) {
     // Make sure we register a serializer in activation event
     webViewPanelSerializerDisposable = window.registerWebviewPanelSerializer(DirectoryPanel.viewType, {
       async deserializeWebviewPanel(webviewPanel: WebviewPanel, state: PathologicalStats) {
-        console.log(`Got state: ${state}`);
+        console.log(`Got state: ${JSON.stringify(state, null, 2)}`);
         // Reset the webview options so we use latest uri for `localResourceRoots`.
         webviewPanel.webview.options = DirectoryPanel.getWebviewOptions(context.extensionUri);
         DirectoryPanel.revive(webviewPanel, context.extensionUri, state);
+
+        // await a noop promise.
+        await new Promise<void>((resolve) => {
+          resolve();
+        });
       }
     });
   }
