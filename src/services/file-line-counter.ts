@@ -9,10 +9,10 @@ import { getConfiguration } from "./config-reader";
  */
 export function tryCountLines(filePath: string): number {
   const config = getConfiguration();
-  if (config && config.stats){
+  if (config && config.stats) {
     return 0;
   }
-  
+
   let lineCount = 0;
   try {
     const { stdout } = exec(`cat "${filePath}" | wc -l`);

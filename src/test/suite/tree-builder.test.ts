@@ -14,6 +14,7 @@ suite("buildTree", () => {
     horizontalLine: "─",
     junction: "├",
     corner: "└",
+    stats: false,
     normalizedPathSeparator: "/"
   };
 
@@ -25,6 +26,7 @@ suite("buildTree", () => {
     horizontalLine: "→",
     junction: "+",
     corner: "⁘",
+    stats: false,
     normalizedPathSeparator: "/"
   };
 
