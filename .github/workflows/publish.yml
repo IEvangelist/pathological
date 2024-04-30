@@ -70,7 +70,7 @@ jobs:
       - uses: actions/checkout@8530928916aaef40f59e6f221989ccb31f5759e7
       - uses: actions/setup-node@2a017f350dbf6c4b6bb4508cc83809719115162e
         with:
-          node-version: 18.x
+          node-version: 20.x
           cache: "npm"
           registry-url: "https://npm.pkg.github.com"
 
