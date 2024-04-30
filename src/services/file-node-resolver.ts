@@ -3,6 +3,8 @@ import { readdirSync, statSync } from "fs";
 import { IFileTreeNode, FileTreeNode } from "../types/file-tree-node";
 import { FileKind } from "../types/file-kind";
 import { tryCountLines } from "./file-line-counter";
+import { getConfiguration } from "./config-reader";
+import glob from "glob";
 
 /**
  * Recursively generates a tree of file system nodes for the given folder path.
@@ -29,7 +31,11 @@ export function generateFileSystemTree(folderPath: string, depth: number = 0): F
   };
 
   if (node.isDirectory) {
-    const files = readdirSync(folderPath);
+    const config = getConfiguration();
+    const files =
+      !!config.filterExpression && config.filterExpression.length > 0
+        ? glob.sync(config.filterExpression, { cwd: folderPath })
+        : readdirSync(folderPath);
 
     node.children = files.map(file => {
       const filePath = join(folderPath, file);

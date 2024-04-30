@@ -51,6 +51,12 @@ export interface PathologicalConfiguration {
   stats: boolean;
 
   /**
+   * A filter expression to apply to the tree.
+   * @default undefined
+   */
+  filterExpression?: string;
+
+  /**
    * Whether to normalize the path.
    * @default undefined
    */

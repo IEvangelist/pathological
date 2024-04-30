@@ -132,6 +132,10 @@
           "description": "Whether or not to evaluate the file-system stats. Requires an expensive I/O-bound operation, reading files.",
           "default": false
         },
+        "pathological.filterExpression": {
+          "type": "string",
+          "description": "The filter expression used as a Regex to glob match files/folders. If not provided, matches all files/folders."
+        },
         "pathological.normalizedPathSeparator": {
           "type": "string",
           "description": "Represents the path separator to use when copying relative paths. If not provided, uses the system default."
