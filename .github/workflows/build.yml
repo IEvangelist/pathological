@@ -22,7 +22,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@2a017f350dbf6c4b6bb4508cc83809719115162e
         with:
-          node-version: 18.x
+          node-version: 20.x
           cache: "npm"
           registry-url: "https://npm.pkg.github.com"
       - run: npm ci
