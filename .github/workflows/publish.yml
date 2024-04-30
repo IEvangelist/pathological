@@ -23,10 +23,10 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@8530928916aaef40f59e6f221989ccb31f5759e7
+      - uses: actions/checkout@main
       - name: Check if version has changed
         id: check-version
-        uses: actions/github-script@1f16022c7518aad314c43abcd029895291be0f52
+        uses: actions/github-script@main
         with:
           script: |
             const version = '${{ github.event.inputs.version }}' || require('./package.json').version;
@@ -67,8 +67,8 @@ jobs:
       path: ${{ env.EXT_PATH }}
 
     steps:
-      - uses: actions/checkout@8530928916aaef40f59e6f221989ccb31f5759e7
-      - uses: actions/setup-node@2a017f350dbf6c4b6bb4508cc83809719115162e
+      - uses: actions/checkout@main
+      - uses: actions/setup-node@main
         with:
           node-version: 20.x
           cache: "npm"
@@ -96,7 +96,7 @@ jobs:
             echo "EXT_PATH=/home/runner/work/pathological/pathological/pathological-${EXT_VERSION}.vsix"  >> $GITHUB_ENV
           fi
 
-      - uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32
+      - uses: actions/upload-artifact@main
         with:
           name: vscode-github-actions-${{ env.EXT_VERSION }}.vsix
           path: ${{ env.EXT_PATH }}
@@ -105,7 +105,7 @@ jobs:
         run: mv package.json.real package.json
 
       - name: Create release and upload release asset
-        uses: actions/github-script@1f16022c7518aad314c43abcd029895291be0f52
+        uses: actions/github-script@main
         with:
           script: |
             const fs = require("fs");
@@ -144,7 +144,7 @@ jobs:
     permissions: {}
 
     steps:
-      - uses: actions/download-artifact@e9ef242655d12993efdcda9058dee2db83a2cb9b
+      - uses: actions/download-artifact@main
         with:
           name: vscode-github-actions-${{ needs.release.outputs.version }}.vsix
 
@@ -161,7 +161,7 @@ jobs:
   #     OPEN_VSX_TOKEN: ${{ secrets.OPEN_VSX_TOKEN }}
   #   steps:
   #     - name: Download artifact
-  #       uses: actions/download-artifact@e9ef242655d12993efdcda9058dee2db83a2cb9b
+  #       uses: actions/download-artifact@main
   #       with:
   #         name: vscode-github-actions-${{ needs.release.outputs.version }}.vsix
 
