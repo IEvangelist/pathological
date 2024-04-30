@@ -9,7 +9,7 @@ import { getConfiguration } from "./config-reader";
  */
 export function tryCountLines(filePath: string): number {
   const config = getConfiguration();
-  if (config && config.stats) {
+  if (config && config.stats === false) {
     return 0;
   }
 
