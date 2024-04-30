@@ -15,6 +15,7 @@ export function getConfiguration(): PathologicalConfiguration {
   const junction = config.get("pathological.junction", "├");
   const corner = config.get("pathological.corner", "└");
   const indent = config.get("pathological.indent", 4);
+  const stats = config.get("pathological.stats", false);
   const normalizedPathSeparator = config.get("pathological.normalizedPathSeparator", undefined);
 
   return {
@@ -25,6 +26,7 @@ export function getConfiguration(): PathologicalConfiguration {
     junction,
     corner,
     indent,
+    stats,
     normalizedPathSeparator
   };
 }

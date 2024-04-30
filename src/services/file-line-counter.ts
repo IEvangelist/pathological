@@ -1,12 +1,18 @@
 import { exec } from "child_process";
 import { createInterface } from "readline";
 import { createReadStream, readFileSync } from "fs";
+import { getConfiguration } from "./config-reader";
 
 /**
  * Given a file path, read the file and count the number of lines
  * in the most efficient and performant way possible.
  */
 export function tryCountLines(filePath: string): number {
+  const config = getConfiguration();
+  if (config && config.stats){
+    return 0;
+  }
+  
   let lineCount = 0;
   try {
     const { stdout } = exec(`cat "${filePath}" | wc -l`);

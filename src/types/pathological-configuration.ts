@@ -45,6 +45,12 @@ export interface PathologicalConfiguration {
   indent: number;
 
   /**
+   * Whether to calculate file statistics. This is a very expensive operation!
+   * @default false
+   */
+  stats: boolean;
+
+  /**
    * Whether to normalize the path.
    * @default undefined
    */
