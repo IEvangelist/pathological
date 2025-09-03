@@ -123,9 +123,9 @@ At the core, Pathological renders a folder as text using a small, configurable r
 * `buildTree(node, config)` is a thin wrapper that calls buildFileTree.
 * `buildFileTree(node, config, previousTree = "")` walks the node's children. For each child:
   * It detects whether the child is the last among its siblings (isLastChild). This chooses corner vs junction characters.
-  * Directories: it prints a line using toSingleLine(…isDirectory=true, isLeaf=child.isLeaf) and then recurses into the directory. The next level's prefix is computed by previousTree + toLeadingLine(isLastChild,…).
-  * Files: it prints a single line using toSingleLine(…isDirectory=false).
-* toLeadingLine(isLast, verticalLine, indent) returns the vertical "column" to carry through deeper levels using either a vertical bar or a space when the previous level was the last item.
+  * Directories: it prints a line using `toSingleLine(…isDirectory=true, isLeaf=child.isLeaf)` and then recurses into the directory. The next level's prefix is computed by `previousTree` + `toLeadingLine(isLastChild,…)`.
+  * Files: it prints a single line using `toSingleLine(…isDirectory=false)`.
+* `toLeadingLine(isLast, verticalLine, indent)` returns the vertical "column" to carry through deeper levels using either a vertical bar or a space when the previous level was the last item.
 * `toSingleLine(…)` composes one line: chooses corner (`└`) or junction (`├`), repeats horizontal lines (`─`) based on indent, picks an open or closed folder icon for directories (📂 vs 📁), and appends the item's name. It then prepends the accumulated prefix from previous levels.
 
 That's how the algorithm yields a readable, correctly branched tree using only the characters defined by your configuration.
@@ -158,9 +158,9 @@ Open Settings and search for "Pathological", or add to settings.json:
 
 Tips:
 
-* Set normalizedPathSeparator to "/" to always copy Unix‑style paths.
-* Use filterExpression (regex) to include/exclude items when generating lists/trees.
-* Swap in plain ASCII (e.g., |, -, +, \\) if your terminal/font doesn't render box‑drawing characters.
+* Set `normalizedPathSeparator` to `"/"` to always copy Unix‑style paths.
+* Use `filterExpression` (regex) to include/exclude items when generating lists/trees.
+* Swap in plain ASCII (e.g., `|`, `-`, `+`, `\\`) if your terminal/font doesn't render box‑drawing characters.
 
 Settings UI preview:
 
@@ -171,14 +171,14 @@ Settings UI preview:
 * Requirements: VS Code 1.82+ and Node 18+
 * Build: npm install, then npm run build (or npm run watch for live recompilation)
 * Test: npm test
-* Debug: press F5 to launch the extension in a new Extension Development Host window
+* Debug: press <kbd>F5</kbd> to launch the extension in a new Extension Development Host window
 * Package/Publish: vsce package / vsce publish
 
 ## Notes and troubleshooting
 
 * Icons not showing or misaligned? Try a font that supports emoji and box‑drawing characters.
 * "Copy as File System Tree" appears only on folders in the Explorer.
-* Large folders: generating stats can be I/O‑intensive; disable pathological.stats or use a filterExpression.
+* Large folders: generating stats can be I/O‑intensive; disable `pathological.stats` or use a `filterExpression`.
 
 ## License and sponsorship
 
